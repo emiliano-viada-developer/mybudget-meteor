@@ -1,4 +1,4 @@
-<template name="login">
+<template name="join">
     <div class="loginColumns animated fadeInDown">
         <div class="row">
 
@@ -20,23 +20,28 @@
             </div>
             <div class="col-md-6">
                 <div class="ibox-content">
-                    <form class="m-t login" role="form">
+                    <form class="m-t join" role="form">
                         <div class="form-group {{errorClass 'email'}}">
                             <input type="email" name="email" class="form-control" placeholder="Email" required="">
                         </div>
                         <div class="form-group {{errorClass 'password'}}">
-                            <input type="password" name="password" class="form-control" placeholder="Contrase&ntilde;a" required="">
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Contrase&ntilde;a" required="">
                         </div>
-                        <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
-                        <a href="#">
-                            <small>¿Olvidaste tu contrase&ntilde;a?</small>
-                        </a>
+                        <div class="form-group {{errorClass 'confirm'}}">
+                            <input type="password" name="confirm" class="form-control" placeholder="Confirmar Contrase&ntilde;a" required="">
+                        </div>
+                        <div class="form-group {{errorClass 'terms'}}">
+                            <label>
+                                <input name="terms" type="checkbox" required="">
+                                <span style="font-weight:normal;">&nbsp;Acertar terminos y condiciones</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary block full-width m-b">Registrarse</button>
 
                         <p class="text-muted text-center">
-                            <small>¿No te has registrado a&uacute;n?</small>
+                            <small>¿Ya tienes una cuenta?</small>
                         </p>
-                        <a class="btn btn-sm btn-white btn-block" href="{{pathFor route='join'}}">Registrarse</a>
+                        <a class="btn btn-sm btn-white btn-block" href="{{pathFor route='login'}}">Login</a>
                     </form>
                 </div>
             </div>

@@ -1,7 +1,7 @@
-var ERRORS_KEY = 'loginErrors';
+var ERRORS_KEY = 'joinErrors';
 
 // Helpers
-Template.login.helpers({
+Template.join.helpers({
 	currentYear: function() {
 		return new Date().getFullYear();
 	},
@@ -11,45 +11,43 @@ Template.login.helpers({
 });
 
 // Events
-Template.login.events({
+Template.join.events({
     'submit form': function(e) {
         e.preventDefault();
     }
 });
 
 // onCreated
-Template.login.onCreated(function() {
+Template.join.onCreated(function() {
     Session.set(ERRORS_KEY, {});
 });
 
-// onRendered
-Template.login.onRendered(function() {
-    var validator = $('.login').validate({
+// onRendered hook
+Template.join.onRendered(function() {
+    var validator = $('.join').validate({
+        rules: {
+            confirm: {
+                equalTo: '#password'
+            }
+        },
         submitHandler: function(e) {
             var email = $('[name="email"]').val(),
                 password = $('[name="password"]').val();
-
-            Meteor.loginWithPassword(email, password, function(error) {
+            Accounts.createUser({
+                email: email,
+                password: password
+            }, function(error) {
                 if (error) {
                     var errors = {};
-                    if (error.reason == "User not found") {
+                    if (error.reason == "Email already exists.") {
                         errors.email = error.reason;
                         validator.showErrors({
-                            email: 'El usuario no existe'
-                        });
-                    }
-                    if (error.reason == "Incorrect password") {
-                        errors.password = error.reason;
-                        validator.showErrors({
-                            password: 'Contraseña incorrecta'
+                            email: "El email ya se encuentra registrado por otro usuario."
                         });
                     }
                     Session.set(ERRORS_KEY, errors);
                 } else {
-                    var currentRoute = Router.current().route.getName();
-                    if (currentRoute == "login") {
-                        Router.go("dashboard");
-                    }
+                    Router.go('home');
                 }
             });
         },

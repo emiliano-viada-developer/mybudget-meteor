@@ -34,11 +34,12 @@ Router.route('/login', {
     layoutTemplate: 'blankLayout',
     onBeforeAction: onBeforeActions.alreadyLoggedIn
 });
-/*Router.route('/join', {
-    layoutTemplate: 'auth-layout',
+Router.route('/registracion', {
+    name: 'join',
+    layoutTemplate: 'blankLayout',
     onBeforeAction: onBeforeActions.alreadyLoggedIn
 });
-Router.route('/olvide-password', {
+/*Router.route('/olvide-password', {
     name: 'forgotPassword',
     template: 'forgotPassword',
     layoutTemplate: 'auth-layout',
