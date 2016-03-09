@@ -2,9 +2,6 @@ var ERRORS_KEY = 'joinErrors';
 
 // Helpers
 Template.join.helpers({
-	currentYear: function() {
-		return new Date().getFullYear();
-	},
 	errorClass: function(key) {
         return Session.get(ERRORS_KEY)[key] && 'error';
     }

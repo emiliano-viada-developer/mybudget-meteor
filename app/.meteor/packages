@@ -23,3 +23,5 @@ less
 twbs:bootstrap
 fortawesome:fontawesome
 themeteorchef:jquery-validation
+mrt:flash-messages
+dburles:collection-helpers

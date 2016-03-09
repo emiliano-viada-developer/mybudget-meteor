@@ -2,9 +2,6 @@ var ERRORS_KEY = 'loginErrors';
 
 // Helpers
 Template.login.helpers({
-	currentYear: function() {
-		return new Date().getFullYear();
-	},
 	errorClass: function(key) {
         return Session.get(ERRORS_KEY)[key] && 'error';
     }

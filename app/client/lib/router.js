@@ -39,23 +39,23 @@ Router.route('/registracion', {
     layoutTemplate: 'blankLayout',
     onBeforeAction: onBeforeActions.alreadyLoggedIn
 });
-/*Router.route('/olvide-password', {
+Router.route('/olvide-contrasena', {
     name: 'forgotPassword',
     template: 'forgotPassword',
-    layoutTemplate: 'auth-layout',
+    layoutTemplate: 'blankLayout',
     onBeforeAction: onBeforeActions.alreadyLoggedIn
 });
 Router.route('/reset-password/:token', {
     name: 'resetPassword',
     template: 'resetPassword',
     title: 'Reset Password',
-    layoutTemplate: 'auth-layout',
+    layoutTemplate: 'blankLayout',
     onBeforeAction: onBeforeActions.alreadyLoggedIn,
     data: function() {
         Session.set('resetPassword', this.params.token);
         return;
     }
-});*/
+});
 Router.route('/dashboard', {
     title: 'Dashboard',
     onBeforeAction: onBeforeActions.loginRequired,

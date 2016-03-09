@@ -3,20 +3,7 @@
         <div class="row">
 
             <div class="col-md-6">
-                <h2 class="font-bold">Bienvenido a MyBudget.com</h2>
-
-                <p>
-                    Con esta aplicaci&oacute;n podr&aacute;s llevar un seguimiento de tus ingresos y gastos.
-                </p>
-
-                <p>
-                    Con tu usuario podr&aacute;s ingresar tus gastos, consumos e ingresos para llevar un seguimiento de tus cuentas.
-                </p>
-
-                <p>
-                    Utiliza las herramientas proporcionadas por la aplicaci&oacute;n para predecir tus gastos y/o ahorros a futuro.
-                </p>
-
+                {{> welcome }}
             </div>
             <div class="col-md-6">
                 <div class="ibox-content">
@@ -29,7 +16,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
-                        <a href="#">
+                        <a href="{{pathFor route='forgotPassword'}}">
                             <small>¿Olvidaste tu contrase&ntilde;a?</small>
                         </a>
 
@@ -41,14 +28,8 @@
                 </div>
             </div>
         </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-6">
-                MyBudget.com
-            </div>
-            <div class="col-md-6 text-right">
-                <small>&copy; {{currentYear}}</small>
-            </div>
-        </div>
+
+        {{> blankFooter}}
+
     </div>
 </template>
