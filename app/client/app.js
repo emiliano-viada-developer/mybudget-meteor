@@ -24,3 +24,9 @@ $.validator.setDefaults({
         }
     }
 });
+
+// Overall helpers
+// Function to return current year
+UI.registerHelper('currentYear', function() {
+    return new Date().getFullYear();
+});

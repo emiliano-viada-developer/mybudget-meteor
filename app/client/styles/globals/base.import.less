@@ -191,7 +191,7 @@ video {
   #page-wrapper {
     position: inherit;
     margin: 0 0 0 240px;
-    min-height: 1000px;
+    //min-height: 1000px;
   }
 }
 
@@ -1263,7 +1263,7 @@ body.fullscreen-ibox-mode {
   overflow: auto;
   margin-bottom: 0;
 }
-
+.period { padding-top: 8px; }
 .ibox.fullscreen .collapse-link {
   display: none;
 }
@@ -1290,4 +1290,24 @@ body.mini-navbar.fixed-sidebar .nav-header {
 
 body.mini-navbar.fixed-sidebar .logo-element{
   display: none;
+}
+// Footer
+@media (min-width: 768px) {
+  footer {
+      width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  footer {
+      width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  footer {
+      width: 1170px;
+  }
+}
+footer {
+  padding: 0 15px 30px;
+  margin: 0 auto;
 }
