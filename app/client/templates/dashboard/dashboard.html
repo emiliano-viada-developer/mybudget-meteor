@@ -72,54 +72,55 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div>
-                                <span class="pull-right text-right">
-                                <small>Average value of sales in the past month in: <strong>United states</strong></small>
-                                    <br>
-                                    All sales: 162,862
-                                </span>
+                        <div class="pull-right text-right">
+                            <select name="category" size="1">
+                                <option>Category A</option>
+                                <option>Category B</option>
+                                <option>Category C</option>
+                            </select>
+                        </div>
                         <h3 class="font-bold no-margins">
-                            Half-year revenue margin
+                            Category Name
                         </h3>
-                        <small>Sales marketing.</small>
                     </div>
 
                     <div class="m-t-sm">
 
                         <div class="row">
-                            <div class="col-md-8">
-                                <div>
-                                    <canvas id="lineChart" height="175" width="463" style="width: 463px; height: 175px;"></canvas>
-                                </div>
-                            </div>
                             <div class="col-md-4">
                                 <ul class="stat-list m-t-lg">
                                     <li>
-                                        <h2 class="no-margins">2,346</h2>
-                                        <small>Total orders in period</small>
+                                        <h2 class="no-margins">$2,346</h2>
+                                        <small>Mes actual</small>
                                         <div class="progress progress-mini">
                                             <div class="progress-bar" style="width: 48%;"></div>
                                         </div>
                                     </li>
                                     <li>
-                                        <h2 class="no-margins ">4,422</h2>
-                                        <small>Orders in last month</small>
+                                        <h2 class="no-margins ">$4,422</h2>
+                                        <small>Mes anterior</small>
                                         <div class="progress progress-mini">
                                             <div class="progress-bar" style="width: 60%;"></div>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
-                        </div>
 
+                            <div class="col-md-8">
+                                <div>
+                                    <canvas id="lineChart" height="195" width="463" style="width: 463px; height: 195px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="m-t-md">
                         <small class="pull-right">
                             <i class="fa fa-clock-o"> </i>
-                            Update on 16.07.2015
+                            Ultimo movimiento 16.07.2015
                         </small>
                         <small>
-                            <strong>Analysis of sales:</strong> The value has been changed over time, and last month reached a level over $50,000.
+                            <strong>Promedio:</strong> $50,000.
                         </small>
                     </div>
 
@@ -129,22 +130,22 @@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <span class="label label-warning pull-right">Data has changed</span>
-                    <h5>User activity</h5>
+                    <span class="label label-warning pull-right">Cumpliendo</span>
+                    <h5>Objetivos mensuales</h5>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-xs-4">
-                            <small class="stats-label">Pages / Visit</small>
+                            <small class="stats-label">Marzo 2016</small>
                             <h4>236 321.80</h4>
                         </div>
 
                         <div class="col-xs-4">
-                            <small class="stats-label">% New Visits</small>
+                            <small class="stats-label">Objetivo</small>
                             <h4>46.11%</h4>
                         </div>
                         <div class="col-xs-4">
-                            <small class="stats-label">Last week</small>
+                            <small class="stats-label">Diferencia</small>
                             <h4>432.021</h4>
                         </div>
                     </div>
@@ -152,16 +153,16 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-xs-4">
-                            <small class="stats-label">Pages / Visit</small>
+                            <small class="stats-label">Febrero 2016</small>
                             <h4>643 321.10</h4>
                         </div>
 
                         <div class="col-xs-4">
-                            <small class="stats-label">% New Visits</small>
+                            <small class="stats-label">Objetivo</small>
                             <h4>92.43%</h4>
                         </div>
                         <div class="col-xs-4">
-                            <small class="stats-label">Last week</small>
+                            <small class="stats-label">Diferencia</small>
                             <h4>564.554</h4>
                         </div>
                     </div>
@@ -169,16 +170,16 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-xs-4">
-                            <small class="stats-label">Pages / Visit</small>
+                            <small class="stats-label">Enero 2016</small>
                             <h4>436 547.20</h4>
                         </div>
 
                         <div class="col-xs-4">
-                            <small class="stats-label">% New Visits</small>
+                            <small class="stats-label">Objetivo</small>
                             <h4>150.23%</h4>
                         </div>
                         <div class="col-xs-4">
-                            <small class="stats-label">Last week</small>
+                            <small class="stats-label">Diferencia</small>
                             <h4>124.990</h4>
                         </div>
                     </div>
@@ -186,6 +187,63 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" id="show-tab-1" href="#tab-1">&Uacute;ltimos 12 meses</a></li>
+                    <li class=""><a data-toggle="tab" id="show-tab-2" href="#tab-2">Objetivos mensuales</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <div>
+                                <canvas id="lastMonthsChart" height="320" width="708" style="width:708px;height:320px;"></canvas
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="panel-body">
+                            <div>
+                                <canvas id="monthlyTargetsChart" height="320" width="708" style="width:708px;height:320px;"></canvas
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Agregar movimiento</h5>
+                </div>
+                <div class="ibox-content">
+                    <form method="get" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Normal</label>
+                            <div class="col-sm-10"><input type="text" class="form-control"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Normal</label>
+                            <div class="col-sm-10"><input type="text" class="form-control"></div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-white" type="submit">Cancel</button>
+                                <button class="btn btn-primary" type="submit">Save changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 </template>
