@@ -24,6 +24,32 @@ $.validator.setDefaults({
         }
     }
 });
+$.validator.setDefaults({ignore: ":hidden:not(.chosen-select)"});
+$.validator.addMethod(
+    'currency',
+    function (value, element) {
+        return this.optional(element) || /^\d+.\d{0,2}$/.test(value);
+    },
+    $.validator.messages.currency
+);
+
+// Toastr
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "progressBar": false,
+    "preventDuplicates": false,
+    "positionClass": "toast-top-right",
+    "onclick": null,
+    "showDuration": "400",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
 
 // Overall helpers
 // Function to return current year

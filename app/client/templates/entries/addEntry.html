@@ -1,11 +1,13 @@
 <template name="addEntry">
-	<form method="get" class="form-horizontal">
-        <div class="form-group">
+	<form method="get" class="form-horizontal add-entry" novalidate>
+        <div class="form-group {{errorClass 'category'}}">
             <label class="col-sm-3 control-label">Categor&iacute;a</label>
             <div class="col-sm-9">
-                <select size="1" data-placeholder="Selecciona..." class="chosen-select form-control">
-                    <option>Categoria A</option>
-                    <option>Cat B</option>
+            	<select name="category" id="category" size="1" data-placeholder="Selecciona..." class="chosen-select form-control" required>
+                    <option value=""></option>
+                    {{#each categories}}
+                    	<option value="{{_id}}">{{name}}</option>
+                    {{/each}}
                 </select>
             </div>
         </div>
@@ -13,40 +15,40 @@
             <label class="col-sm-3 control-label">Fecha</label>
             <div class="col-sm-9 input-group date" style="padding-left:15px;padding-right:15px;">
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                <input type="text" class="form-control" value="{{today}}">
+                <input type="text" name="date" id="date" class="form-control" value="{{today}}">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">Haber</label>
-            <div class="col-sm-3 i-checks" style="padding:5px 0 0 15px;">
-                <input type="checkbox" class="form-control" value="">
+            <div class="col-sm-3 i-checks haber" style="padding:5px 0 0 15px;">
+                <input type="checkbox" name="haber" id="haber" class="form-control" value="">
                 <i></i>
             </div>
             <label class="col-sm-3 control-label">Computable</label>
-            <div class="col-sm-3 i-checks" style="padding:5px 0 0 15px;">
-                <input type="checkbox" class="form-control" value="">
+            <div class="col-sm-3 i-checks countable" style="padding:5px 0 0 15px;">
+                <input type="checkbox" class="form-control" name="countable" id="countable" value="" checked="">
                 <i></i>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group {{errorClass 'value'}}">
             <label class="col-sm-3 control-label">Valor</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control">
-                <span class="help-block" style="margin-bottom:0;">ejemplo: $ 1.250,25</span>
+                <input type="text" name="value" id="value" class="form-control" required="">
+                <span class="help-block" style="margin-bottom:0;">ejemplo: $ 1250,25</span>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">Comentario</label>
             <div class="col-sm-9">
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control" name="comment" id="comment"></textarea>
             </div>
         </div>
 
         <div class="hr-line-dashed"></div>
         <div class="form-group" style="margin-bottom:0;">
             <div class="col-sm-12 text-right">
-                <button class="btn btn-white">Limpiar</button>
-                <button class="btn btn-primary">Agregar</button>
+                <button class="btn btn-white clean">Limpiar</button>
+                <button class="btn btn-primary" type="submit">Agregar</button>
             </div>
         </div>
     </form>

@@ -139,3 +139,11 @@ Template.dashboard.onRendered(function(){
         monthlyTargetsChart = new Chart(ctz).Bar(monthlyTargetsData, monthlyTargetsOptions);
     });
 });
+
+// Helpers
+Template.dashboard.helpers({
+    categories: function() {
+        return [{_id: 'cat-a', 'name': 'Category A'}, {_id: 'cat-b', 'name': 'Category B'}];
+    }
+});
+
