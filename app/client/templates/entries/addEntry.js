@@ -2,6 +2,11 @@
 
 var ERRORS_KEY = 'addEntryErrors';
 
+// onCreated
+Template.addEntry.onCreated(function() {
+    Session.set(ERRORS_KEY, {});
+});
+
 // onRendered
 Template.addEntry.onRendered(function() {
 	// Chosen select http://harvesthq.github.io/chosen/
@@ -69,17 +74,28 @@ Template.addEntry.onRendered(function() {
 	        }
         },
         submitHandler: function(e) {
-            var entry = {
-            	category: $('#category').val(),
-            	date: $('#date').val(),
+            var date = $('#date').val(), month, day, year, entry;
+
+            day = date.substr(0, 2);
+            month = date.substr(3, 2);
+            year = date.substr(6, 4);
+            date = month + '/' + day + '/' + year;
+
+            entry = {
+            	categoryId: $('#category').val(),
+            	date: new Date(date),
             	haber: $('#haber').is(':checked'),
             	countable: $('#countable').is(':checked'),
-            	value: $('#value').val(),
+            	value: parseFloat($('#value').val().replace('.', '').replace(',', '.')),
             	comment: $('#comment').val()
             };
-            console.log(entry);
-            toastr.success("Movimiento creado exitosamente.");
-            $('.clean').trigger('click');
+
+            Meteor.call('addEntry', entry, function(error) {
+            	if (!error) {
+            		toastr.success("Movimiento creado exitosamente.");
+            		$('.clean').trigger('click');
+            	}
+            });
         },
         invalidHandler: function(event, validator) {
             setTimeout(function() {

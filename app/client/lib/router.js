@@ -63,3 +63,12 @@ Router.route('/dashboard', {
         return;
     }
 });
+Router.route('/movimientos', {
+    name: 'entries',
+    template: 'entries',
+    title: 'Listado de movimientos',
+    onBeforeAction: onBeforeActions.loginRequired,
+    waitOn: function() {
+        return Meteor.subscribe('entries');
+    }
+});

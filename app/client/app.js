@@ -56,3 +56,17 @@ toastr.options = {
 UI.registerHelper('currentYear', function() {
     return new Date().getFullYear();
 });
+
+// Function to format date with momentJS
+UI.registerHelper('formatDate', function(date, format) {
+    var r = null;
+    if (date && format) {
+        r = moment(date).format(format);
+    }
+    return r;
+});
+
+// Format currency, just change decimal separator for now
+UI.registerHelper('formatCurrency', function(value) {
+    return '$' + new String(value).replace('.', ',');
+});

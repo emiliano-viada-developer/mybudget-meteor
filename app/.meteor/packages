@@ -25,3 +25,5 @@ fortawesome:fontawesome
 themeteorchef:jquery-validation
 mrt:flash-messages
 dburles:collection-helpers
+check
+momentjs:moment
