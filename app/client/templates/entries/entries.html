@@ -34,7 +34,7 @@
 			                            <td>{{#if countable}}<i class="fa fa-check text-info"></i>{{/if}}</td>
 			                            <td>{{ formatCurrency value }}</td>
 			                            <td>
-			                            	<a href="" title="Ver" class="text-primary"><i class="fa fa-eye"></i></a> &nbsp;
+			                            	<a href="#" title="Ver" class="text-primary view" data-toggle="modal" data-target="#myBudgetModal" data-entry-id="{{_id}}"><i class="fa fa-eye"></i></a> &nbsp;
 			                            	<a href="" title="Editar" class="text-primary"><i class="fa fa-edit"></i></a> &nbsp;
 			                            	<a href="" title="Eliminar" class="text-primary"><i class="fa fa-times"></i></a>
 			                            </td>
@@ -67,5 +67,8 @@
 	        </div>
 	    </div>
     </div>
+
+    <!-- Include modal tempalte -->
+    {{> modal}}
 
 </template>

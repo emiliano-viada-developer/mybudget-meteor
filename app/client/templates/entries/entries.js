@@ -15,3 +15,25 @@ Template.entries.onRendered(function() {
 	// Footable
 	$('.footable').footable();
 });
+
+// Events
+Template.entries.events({
+	'click .view': function(e) {
+		var link = $(e.currentTarget),
+			entryId = link.attr('data-entry-id'),
+			entry;
+
+		entry = Entries.findOne({_id: entryId});
+		if (entry) {
+			Session.set('modal', {
+				title: 'Ver movimiento',
+				icon: 'fa-eye',
+				body: 'viewEntry',
+				data: entry,
+				closeBtn: {label: 'Cerrar'}
+			});
+		}
+
+		return;
+	}
+});

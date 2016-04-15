@@ -1,0 +1,32 @@
+<template name="viewEntry">
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td class="col-xs-4"><strong>Fecha</strong></td>
+					<td class="col-xs-8">{{ formatDate date 'DD/MM/YYYY' }}</td>
+				</tr>
+				<tr>
+					<td class="col-xs-4"><strong>Debe</strong></td>
+					<td class="col-xs-8">{{#unless haber}}<i class="fa fa-check text-info"></i>{{/unless}}</td>
+				</tr>
+				<tr>
+					<td class="col-xs-4"><strong>Computable</strong></td>
+					<td class="col-xs-8">{{#if countable}}<i class="fa fa-check text-info"></i>{{/if}}</td>
+				</tr>
+				<tr>
+					<td class="col-xs-4"><strong>Categor&iacute;a</strong></td>
+					<td class="col-xs-8">{{categoryId}}</td>
+				</tr>
+				<tr>
+					<td class="col-xs-4"><strong>Valor</strong></td>
+					<td class="col-xs-8">{{ formatCurrency value }}</td>
+				</tr>
+				<tr>
+					<td class="col-xs-4"><strong>Comentario</strong></td>
+					<td class="col-xs-8">{{comment}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</template>

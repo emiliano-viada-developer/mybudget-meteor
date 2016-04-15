@@ -1,0 +1,29 @@
+<template name="modal">
+	<div class="modal inmodal" id="myBudgetModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+                    {{#if icon}}
+                    	<i class="fa {{icon}} modal-icon"></i>
+                	{{/if}}
+                    <h4 class="modal-title">{{title}}</h4>
+                    {{#if description}}
+                    	<small class="font-bold">{{description}}.</small>
+                    {{/if}}
+                </div>
+                <div class="modal-body">
+                    {{> UI.dynamic template=body data=data}}
+                </div>
+                <div class="modal-footer">
+                    {{#if closeBtn}}
+                    	<button type="button" class="btn btn-white" data-dismiss="modal">{{closeBtn.label}}</button>
+                	{{/if}}
+                	{{#if saveBtn}}
+                    	<button type="button" class="btn btn-primary">Save</button>
+                	{{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
