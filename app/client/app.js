@@ -51,6 +51,21 @@ toastr.options = {
     "hideMethod": "fadeOut"
 }
 
+// Datepicker
+// Data Picker https://github.com/eternicode/bootstrap-datepicker
+$.fn.datepicker.dates['es'] = {
+    days: ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
+    daysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+    daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+    months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+    monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    today: "Hoy",
+    clear: "Limpiar",
+    format: "dd/mm/yyyy",
+    titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+    weekStart: 0
+};
+
 // Overall helpers
 // Function to return current year
 UI.registerHelper('currentYear', function() {
@@ -69,4 +84,10 @@ UI.registerHelper('formatDate', function(date, format) {
 // Format currency, just change decimal separator for now
 UI.registerHelper('formatCurrency', function(value) {
     return '$' + new String(value).replace('.', ',');
+});
+
+// Function to check which dropdown's option is selected
+UI.registerHelper('selected', function(a, b) {
+    var selected = (a == b)? 'selected' : '';
+    return selected;
 });

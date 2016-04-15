@@ -1,0 +1,47 @@
+<template name="editEntry">
+	<form method="get" class="form-horizontal edit-entry" novalidate>
+        <div class="form-group {{errorClass 'category'}}">
+            <label class="col-sm-3 control-label">Categor&iacute;a</label>
+            <div class="col-sm-9">
+            	<select name="category" id="category-edit" size="1" data-placeholder="Selecciona..." class="chosen-select form-control" required>
+                    <option value=""></option>
+                    {{#each categories}}
+                    	<option value="{{_id}}" {{ selected _id ../categoryId }}>{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="form-group" id="date_2">
+            <label class="col-sm-3 control-label">Fecha</label>
+            <div class="col-sm-9 input-group date datepicker" style="padding-left:15px;padding-right:15px;">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="text" name="date" id="date-edit" class="form-control" value="{{ formatDate date 'DD/MM/YYYY' }}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Haber</label>
+            <div class="col-sm-3 i-checks-edit haber" style="padding:5px 0 0 15px;">
+                <input type="checkbox" name="haber" id="haber-edit" class="form-control" value="" {{isHaber}}>
+                <i></i>
+            </div>
+            <label class="col-sm-3 control-label">Computable</label>
+            <div class="col-sm-3 i-checks-edit countable" style="padding:5px 0 0 15px;">
+                <input type="checkbox" class="form-control" name="countable" id="countable-edit" value="" {{isCountable}}>
+                <i></i>
+            </div>
+        </div>
+        <div class="form-group {{errorClass 'value'}}">
+            <label class="col-sm-3 control-label">Valor</label>
+            <div class="col-sm-9">
+                <input type="text" name="value" id="value-edit" class="form-control" required="" value="{{value}}">
+                <span class="help-block" style="margin-bottom:0;">ejemplo: $ 1250,25</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Comentario</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" name="comment" id="comment-edit">{{comment}}</textarea>
+            </div>
+        </div>
+    </form>
+</template>

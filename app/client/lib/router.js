@@ -20,7 +20,8 @@ var onBeforeActions = {
 
 // Routes
 Router.configure({
-    layoutTemplate: 'layout'
+    layoutTemplate: 'layout',
+    loadingTemplate: 'loading'
 });
 Router.route('home', {
     path: '/',
