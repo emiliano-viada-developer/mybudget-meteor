@@ -24,6 +24,73 @@ Template.editEntry.onRendered(function() {
 	    calendarWeeks: true,
 	    autoclose: true
 	});
+
+	// Process form
+    var validator = $('.edit-entry').validate({
+        rules: {
+            category: {
+                required: true
+            },
+            date: {
+            	required: true
+            },
+            value: {
+                required: true,
+                currency: true
+            }
+        },
+        messages: {
+        	category: {
+	            required: 'Este campo es requerido'
+	        },
+	        date: {
+	            required: 'Este campo es requerido'
+	        },
+	        value: {
+	            required: 'Este campo es requerido',
+	            currency: 'Valor invalido'
+	        }
+        },
+        submitHandler: function(e) {
+            var date = $('#date-edit').val(), month, day, year, entry,
+            	form = $('.edit-entry'), entryId = form.attr('data-entry-id');
+
+            day = date.substr(0, 2);
+            month = date.substr(3, 2);
+            year = date.substr(6, 4);
+            date = month + '/' + day + '/' + year;
+
+            entry = {
+            	categoryId: $('#category-edit').val(),
+            	date: new Date(date),
+            	haber: $('#haber-edit').is(':checked'),
+            	countable: $('#countable-edit').is(':checked'),
+            	value: parseFloat($('#value-edit').val().replace('.', '').replace(',', '.')),
+            	comment: $('#comment-edit').val()
+            };
+
+            Meteor.call('editEntry', entryId, entry, function(error) {
+            	if (!error) {
+            		toastr.success("Movimiento editado exitosamente.");
+					$('#myBudgetModal').modal('hide');
+            	}
+            });
+        },
+        invalidHandler: function(event, validator) {
+            setTimeout(function() {
+                var errors = {};
+                $.each(validator.currentForm, function(i, elem) {
+                    var input = $(elem);
+                    if (input.hasClass('error')) {
+                        errors[input.attr('name')] = 'error';
+                    }
+                });
+                if (errors) {
+                    Session.set(ERRORS_KEY, errors);
+                }
+            }, 100);
+        }
+    });
 });
 
 // helpers
@@ -47,6 +114,6 @@ Template.editEntry.helpers({
 // Events
 Template.editEntry.events({
 	'submit form': function(e) {
-        e.preventDefault();console.log('Submitted form');
+        e.preventDefault();
     }
 });

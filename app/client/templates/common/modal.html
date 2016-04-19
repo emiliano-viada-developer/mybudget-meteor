@@ -19,9 +19,12 @@
                     {{#if closeBtn}}
                     	<button type="button" class="btn btn-white" data-dismiss="modal">{{closeBtn.label}}</button>
                 	{{/if}}
-                	{{#if saveBtn}}
-                    	<button type="button" class="btn btn-primary btn-save">{{saveBtn.label}}</button>
-                	{{/if}}
+                	{{#if editBtn}}
+                        <button type="button" class="btn btn-success btn-edit" data-entry-id="{{data._id}}">{{editBtn.label}}</button>
+                    {{/if}}
+                    {{#if saveBtn}}
+                        <button type="button" class="btn btn-primary btn-save">{{saveBtn.label}}</button>
+                    {{/if}}
                 </div>
             </div>
         </div>

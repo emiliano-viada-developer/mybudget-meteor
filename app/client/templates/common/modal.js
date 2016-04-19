@@ -37,6 +37,10 @@ Template.modal.helpers({
 	saveBtn: function() {
 		var modalSession = Session.get('modal');
 		return (modalSession)? modalSession.saveBtn : '';
+	},
+	editBtn: function() {
+		var modalSession = Session.get('modal');
+		return (modalSession)? modalSession.editBtn : '';
 	}
 });
 
@@ -50,5 +54,20 @@ Template.modal.events({
         if (form) {
         	form.submit();
         }
+    },
+    'click .btn-edit': function(e) {
+    	var entryId = $(e.currentTarget).attr('data-entry-id'), entry;
+
+    	entry = Entries.findOne({_id: entryId});
+		if (entry) {
+			Session.set('modal', {
+				title: 'Editar movimiento',
+				icon: 'fa-edit',
+				body: 'editEntry',
+				data: entry,
+				saveBtn: {label: 'Editar'},
+				closeBtn: {label: 'Cerrar'}
+			});
+		}
     }
 });

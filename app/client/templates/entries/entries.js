@@ -30,6 +30,7 @@ Template.entries.events({
 				icon: 'fa-eye',
 				body: 'viewEntry',
 				data: entry,
+				editBtn: {label: 'Editar'},
 				closeBtn: {label: 'Cerrar'}
 			});
 		}
@@ -54,5 +55,26 @@ Template.entries.events({
 		}
 
 		return;
+	},
+	'click .delete': function(e) {
+		var link = $(e.currentTarget),
+			entryId = link.attr('data-entry-id');
+
+		swal({
+            title: "¿Estas seguro?",
+            text: "El movimiento sera eliminado!",
+            type: "error",
+            showCancelButton: true,
+            confirmButtonColor: "#f27474",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false
+        }, function () {
+            Meteor.call('removeEntry', entryId, function(error) {
+            	if (!error) {
+            		swal("Eliminado!", "El movimiento ha sido eliminado.", "success");
+            	}
+            });
+        });
 	}
 });
