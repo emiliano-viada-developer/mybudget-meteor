@@ -73,3 +73,12 @@ Router.route('/movimientos', {
         return Meteor.subscribe('entries');
     }
 });
+Router.route('/categorias', {
+    name: 'categories',
+    template: 'categories',
+    title: 'Listado de categorias',
+    onBeforeAction: onBeforeActions.loginRequired,
+    waitOn: function() {
+        return Meteor.subscribe('categories');
+    }
+});
