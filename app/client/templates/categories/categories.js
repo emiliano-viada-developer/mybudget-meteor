@@ -26,10 +26,11 @@ Template.categories.events({
 				title: 'Editar categoria',
 				icon: 'fa-edit',
 				body: 'addCategory',
-				data: {categories: Categories.find({}).fetch(), category: category},
+				data: {categories: Categories.find({}).fetch(), category: category, mode: 'edit'},
 				saveBtn: {label: 'Editar'},
 				closeBtn: {label: 'Cerrar'}
 			});
+			setTimeout(function() { $('.chosen-select').trigger("chosen:updated"); }, 300);
 		}
 
 		return;

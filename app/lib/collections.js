@@ -8,3 +8,10 @@ Categories.helpers({
         return Categories.findOne(this.parentId);
     }
 });
+
+// Helpers for Entries collecion
+Entries.helpers({
+  	getCategory: function() {
+        return Categories.findOne(this.categoryId);
+    }
+});

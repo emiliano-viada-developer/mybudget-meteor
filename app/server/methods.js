@@ -54,6 +54,19 @@ Meteor.methods({
 			throw new Meteor.Error("not-logged-in", "You're not logged-in.");
 		}
 	},
+	'editCategory': function(categoryId, category) {
+		var currentUser = Meteor.userId();
+
+		if (currentUser) {
+			check(category, {parentId: String, name: String, description: String});
+			category.updatedAt = new Date();
+
+			Categories.update({_id: categoryId, ownerId: currentUser}, {$set: category});
+
+		} else {
+			throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+		}
+	},
 	'removeCategory': function(categoryId) {
 		var currentUser = Meteor.userId();
 

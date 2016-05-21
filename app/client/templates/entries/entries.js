@@ -6,7 +6,7 @@ Template.entries.helpers({
 		return Entries.find({});
 	},
 	categories: function() {
-		return [{_id: 'cat-a', 'name': 'Category A'}, {_id: 'cat-b', 'name': 'Category B'}];
+		return Categories.find({});
 	}
 });
 
@@ -24,6 +24,7 @@ Template.entries.events({
 			entry;
 
 		entry = Entries.findOne({_id: entryId});
+		entry.categoryName = entry.getCategory().name;
 		if (entry) {
 			Session.set('modal', {
 				title: 'Ver movimiento',
@@ -52,6 +53,10 @@ Template.entries.events({
 				saveBtn: {label: 'Editar'},
 				closeBtn: {label: 'Cerrar'}
 			});
+			setTimeout(function() {
+				$('.chosen-select').trigger("chosen:updated");
+				$('.i-checks-edit').iCheck('update');
+			}, 300);
 		}
 
 		return;

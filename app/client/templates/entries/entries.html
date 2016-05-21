@@ -30,7 +30,7 @@
 			                            <td>{{ formatDate date 'DD/MM/YYYY' }}</td>
 			                            <td>{{#unless haber}}<i class="fa fa-check text-info"></i>{{/unless}}</td>
 			                            <td>{{#if haber}}<i class="fa fa-check text-info"></i>{{/if}}</td>
-			                            <td>{{categoryId}}</td>
+			                            <td>{{getCategory.name}}</td>
 			                            <td>{{#if countable}}<i class="fa fa-check text-info"></i>{{/if}}</td>
 			                            <td>{{ formatCurrency value }}</td>
 			                            <td>

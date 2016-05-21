@@ -3,8 +3,8 @@
 // onRendered
 Template.modal.onRendered(function() {
 	// Fix chosen plugin on modal
-	$('#myBudgetModal').on('show.bs.modal', function () {
-        $('.chosen-select', this).chosen('destroy').chosen({width: '100%'});
+	$('#myBudgetModal').on('shown.bs.modal', function () {
+        $('.chosen-select', this).chosen('destroy').chosen({width: '100%', allow_single_deselect: true});
     });
 });
 
@@ -68,6 +68,11 @@ Template.modal.events({
 				saveBtn: {label: 'Editar'},
 				closeBtn: {label: 'Cerrar'}
 			});
+			setTimeout(function() {
+				$('.chosen-select').chosen('destroy').chosen({width: '100%', allow_single_deselect: true});
+				$('.chosen-select').trigger("chosen:updated");
+				$('.i-checks-edit').iCheck('update');
+			}, 300);
 		}
     }
 });

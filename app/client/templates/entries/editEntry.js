@@ -25,6 +25,9 @@ Template.editEntry.onRendered(function() {
 	    autoclose: true
 	});
 
+    // Since we render this template in a modal, fix it
+    $('.chosen-select', this).chosen('destroy').chosen({width: '100%', allow_single_deselect: true});
+
 	// Process form
     var validator = $('.edit-entry').validate({
         rules: {
@@ -99,7 +102,7 @@ Template.editEntry.helpers({
         return Session.get(ERRORS_KEY)[key] && 'error';
     },
 	categories: function() {
-		return [{_id: 'cat-a', 'name': 'Category A'}, {_id: 'cat-b', 'name': 'Category B'}];
+		return Categories.find({});
 	},
 	isHaber: function() {
 		$('.i-checks-edit').iCheck('update');

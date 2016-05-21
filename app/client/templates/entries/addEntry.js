@@ -11,7 +11,7 @@ Template.addEntry.onCreated(function() {
 Template.addEntry.onRendered(function() {
 	// Chosen select http://harvesthq.github.io/chosen/
 	var config = {
-        '.chosen-select': {},
+        '.chosen-select': {width: '100%', allow_single_deselect: true},
     }
     for (var selector in config) {
         $(selector).chosen(config[selector]);

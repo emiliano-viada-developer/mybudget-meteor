@@ -9,5 +9,16 @@ Template.topNavigation.events({
                 }
             });
         }
+    },
+    'click .add-category-link': function(e) {
+        categories = Categories.find({}).fetch();
+        Session.set('modal', {
+            title: 'Agregar categoria',
+            icon: 'fa-plus-square-o',
+            body: 'addCategory',
+            data: categories,
+            saveBtn: {label: 'Agregar'},
+            closeBtn: {label: 'Cerrar'}
+        });
     }
 });

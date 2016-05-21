@@ -1,12 +1,12 @@
 <template name="addCategory">
-	<form method="get" class="form-horizontal add-category" novalidate>
+	<form method="get" class="form-horizontal {{mode}}-category" novalidate data-category-id="{{getCategoryId}}">
         <div class="form-group">
             <label class="col-sm-3 control-label">Padre</label>
             <div class="col-sm-9">
-            	<select name="category" id="category" size="1" data-placeholder="Selecciona..." class="chosen-select form-control">
+            	<select name="category" size="1" data-placeholder="Selecciona..." class="chosen-select form-control category">
                     <option value=""></option>
                     {{#each categories}}
-                    	<option value="{{_id}}">{{name}}</option>
+                    	<option value="{{_id}}" {{ selected _id ../category.parentId }}>{{name}}</option>
                     {{/each}}
                 </select>
             </div>
@@ -14,22 +14,24 @@
         <div class="form-group {{errorClass 'name'}}">
             <label class="col-sm-3 control-label">Nombre</label>
             <div class="col-sm-9 input-group" style="padding-left:15px;padding-right:15px;">
-                <input type="text" name="name" id="name" class="form-control" value="{{name}}" required>
+                <input type="text" name="name" class="form-control name" value="{{cName}}" required>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">Descripci&oacute;n</label>
             <div class="col-sm-9">
-                <textarea class="form-control" name="description" id="description"></textarea>
+                <textarea class="form-control description" name="description">{{description}}</textarea>
             </div>
         </div>
 
-        <div class="hr-line-dashed"></div>
-        <div class="form-group" style="margin-bottom:0;">
-            <div class="col-sm-12 text-right">
-                <button class="btn btn-white clean">Limpiar</button>
-                <button class="btn btn-primary" type="submit">Agregar</button>
-            </div>
-        </div>
+        {{#unless modalMode}}
+	        <div class="hr-line-dashed"></div>
+	        <div class="form-group" style="margin-bottom:0;">
+	            <div class="col-sm-12 text-right">
+	                <button class="btn btn-white clean">Limpiar</button>
+	                <button class="btn btn-primary" type="submit">Agregar</button>
+	            </div>
+	        </div>
+        {{/unless}}
     </form>
 </template>
