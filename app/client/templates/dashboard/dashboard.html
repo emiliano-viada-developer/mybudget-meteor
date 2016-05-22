@@ -73,10 +73,11 @@
                 <div class="ibox-content">
                     <div>
                         <div class="pull-right text-right">
-                            <select name="category" size="1" class="form-control">
-                                <option>Category A</option>
-                                <option>Category B</option>
-                                <option>Category C</option>
+                            <select name="category" size="1" data-placeholder="Selecciona..." class="chosen-select form-control">
+                                <option value=""></option>
+                                {{#each categories}}
+                                    <option value="{{_id}}">{{name}}</option>
+                                {{/each}}
                             </select>
                         </div>
                         <h3 class="font-bold no-margins">

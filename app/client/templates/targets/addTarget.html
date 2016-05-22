@@ -1,0 +1,42 @@
+<template name="addTarget">
+	<form method="get" class="form-horizontal {{mode}}-target" novalidate data-target-id="{{getTargetId}}">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Mes</label>
+            <div class="col-sm-9">
+            	<select name="month" size="1" class="form-control target-month">
+                    {{#each months}}
+                        <option value="{{key}}" {{ selected key selectedMonth }}>{{name}}</option>
+                    {{/each}}
+                </select>
+                <select name="year" size="1" class="form-control target-year">
+                    {{#each years}}
+                        <option value="{{key}}" {{ selected key selectedYear }}>{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="form-group {{errorClass 'amount'}}">
+            <label class="col-sm-3 control-label">Cantidad</label>
+            <div class="col-sm-9">
+                <input type="text" name="amount" class="form-control amount" value="{{amount}}" required>
+                <span class="help-block" style="margin-bottom:0;">ejemplo: $ 1250,25</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Puntos</label>
+            <div class="col-sm-9">
+                <input type="text" name="points" class="form-control points" value="{{points}}">
+            </div>
+        </div>
+
+        {{#unless modalMode}}
+            <div class="hr-line-dashed"></div>
+            <div class="form-group" style="margin-bottom:0;">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-white clean">Limpiar</button>
+                    <button class="btn btn-primary" type="submit">Agregar</button>
+                </div>
+            </div>
+        {{/unless}}
+    </form>
+</template>

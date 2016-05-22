@@ -82,3 +82,12 @@ Router.route('/categorias', {
         return Meteor.subscribe('categories');
     }
 });
+Router.route('/objetivos-mensuales', {
+    name: 'targets',
+    template: 'targets',
+    title: 'Listado de objetivos mensuales',
+    onBeforeAction: onBeforeActions.loginRequired,
+    waitOn: function() {
+        return Meteor.subscribe('targets');
+    }
+});

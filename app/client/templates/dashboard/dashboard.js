@@ -143,7 +143,7 @@ Template.dashboard.onRendered(function(){
 // Helpers
 Template.dashboard.helpers({
     categories: function() {
-        return [{_id: 'cat-a', 'name': 'Category A'}, {_id: 'cat-b', 'name': 'Category B'}];
+        return Categories.find({});
     }
 });
 

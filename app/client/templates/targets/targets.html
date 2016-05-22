@@ -1,6 +1,6 @@
-<template name="categories">
+<template name="targets">
 	<div class="container">
-		<h1>Listado de categor&iacute;as</h1>
+		<h1>Listado de objetivos mensuales</h1>
 
 		<div class="row">
 	        <div class="col-lg-8">
@@ -15,25 +15,25 @@
 	                    <table class="footable table table-stripped" data-page-size="15" data-filter=#filter>
 	                        <thead>
 	                        <tr>
-	                            <th>Nombre</th>
-	                            <th>Padre</th>
-	                            <th>Descripci&oacute;n</th>
+	                            <th>Mes</th>
+	                            <th>Cantidad</th>
+	                            <th>Puntos</th>
 	                            <th>Acciones</th>
 	                        </tr>
 	                        </thead>
 	                        <tbody>
-		                        {{#each categories}}
+		                        {{#each targets}}
 			                        <tr class="gradeA">
-			                            <td>{{name}}</td>
-			                            <td>{{getParent.name}}</td>
-			                            <td>{{description}}</td>
+			                            <td>{{getMonthName(month)}}</td>
+			                            <td>{{amount}}</td>
+			                            <td>{{points}}</td>
 			                            <td>
-			                            	<a href="#" title="Editar" class="text-primary edit" data-toggle="modal" data-target="#myBudgetModal" data-category-id="{{_id}}"><i class="fa fa-edit"></i></a> &nbsp;
-			                            	<a href="#" title="Eliminar" class="text-primary delete" data-category-id="{{_id}}"><i class="fa fa-times"></i></a>
+			                            	<a href="#" title="Editar" class="text-primary edit" data-toggle="modal" data-target="#myBudgetModal" data-target-id="{{_id}}"><i class="fa fa-edit"></i></a> &nbsp;
+			                            	<a href="#" title="Eliminar" class="text-primary delete" data-target-id="{{_id}}"><i class="fa fa-times"></i></a>
 			                            </td>
 			                        </tr>
 		                        {{else}}
-		                        	<tr><td colspan="4" class="text-center">No hay categor&iacute;as.</td></tr>
+		                        	<tr><td colspan="4" class="text-center">No hay objetivos mensuales.</td></tr>
 		                        {{/each}}
 	                        </tbody>
 	                        <tfoot>
@@ -51,10 +51,10 @@
 	        <div class="col-lg-4">
 	        	<div class="ibox float-e-margins">
 	                <div class="ibox-title">
-	                    <h5 id="addCategory">Agregar categor&iacute;a</h5>
+	                    <h5 id="addTarget">Agregar objetivo</h5>
 	                </div>
 	                <div class="ibox-content">
-	                    {{>addCategory categories}}
+	                    {{>addTarget}}
 	                </div>
 	            </div>
             </div>

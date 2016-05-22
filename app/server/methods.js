@@ -75,5 +75,42 @@ Meteor.methods({
 		} else {
 			throw new Meteor.Error("not-logged-in", "You're not logged-in.");
 		}
+	},
+	'addTarget': function(target) {
+		var currentUser = Meteor.userId();
+
+		if (currentUser) {
+			check(target, {month: String, amount: Number, points: Number});
+			target.ownerId = currentUser;
+			target.createdAt = new Date();
+			target.updatedAt = new Date();
+
+			Targets.insert(target);
+
+		} else {
+			throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+		}
+	},
+	'editTarget': function(targetId, target) {
+		var currentUser = Meteor.userId();
+
+		if (currentUser) {
+			check(target, {month: String, amount: Number, points: Number});
+			target.updatedAt = new Date();
+
+			Targets.update({_id: targetId, ownerId: currentUser}, {$set: target});
+
+		} else {
+			throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+		}
+	},
+	'removeTarget': function(targetId) {
+		var currentUser = Meteor.userId();
+
+		if (currentUser) {
+			Targets.remove({_id: targetId, ownerId: currentUser});
+		} else {
+			throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+		}
 	}
 });

@@ -66,6 +66,11 @@ $.fn.datepicker.dates['es'] = {
     weekStart: 0
 };
 
+monthLabels = [{key: 1, name: 'Enero'}, {key: 2, name: 'Febrero'}, {key: 3, name: 'Marzo'},
+            {key: 4, name: 'Abril'}, {key: 5, name: 'Mayo'}, {key: 6, name: 'Junio'},
+            {key: 7, name: 'Julio'}, {key: 8, name: 'Agosto'}, {key: 9, name: 'Septiembre'},
+            {key: 10, name: 'Octubre'},{key: 11, name: 'Noviembre'},{key: 12, name: 'Diciembre'}];
+
 // Overall helpers
 // Function to return current year
 UI.registerHelper('currentYear', function() {
