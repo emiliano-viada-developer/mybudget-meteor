@@ -86,13 +86,33 @@ UI.registerHelper('formatDate', function(date, format) {
     return r;
 });
 
-// Format currency, just change decimal separator for now
+formatNumber = function(value) {
+    return new String(value).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+// Format number
+UI.registerHelper('formatNumber', function(value) {
+    return formatNumber(value);
+});
+// Format currency
 UI.registerHelper('formatCurrency', function(value) {
-    return '$' + new String(value).replace('.', ',');
+    return '$' + formatNumber(value);
 });
 
 // Function to check which dropdown's option is selected
 UI.registerHelper('selected', function(a, b) {
     var selected = (a == b)? 'selected' : '';
     return selected;
+});
+
+UI.registerHelper('getMonthName', function(month) {
+    var nm = month.substr(5, 2), year = month.substr(0, 4), monthLabel;
+
+    nm = (nm[0] == 0)? nm.replace('0', '') : nm;
+    $.each(monthLabels, function(index, obj) {
+        if (obj.key == nm) {
+            monthLabel = obj.name;
+        }
+    });
+
+    return monthLabel + ' ' + year;
 });

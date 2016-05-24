@@ -1,0 +1,37 @@
+<template name="dashboardTargets">
+	<div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <!--<span class="label label-warning pull-right">Cumpliendo</span>-->
+            <h5>Objetivos mensuales</h5>
+        </div>
+        {{#each targets}}
+	        <div class="ibox-content">
+	            <div class="row">
+	                <div class="col-xs-4">
+	                    <small class="stats-label">{{getMonthName(month)}}</small>
+	                    <h4>{{formatCurrency 46700}}</h4>
+	                </div>
+
+	                <div class="col-xs-4">
+	                    <small class="stats-label">Objetivo</small>
+	                    <h4>{{formatCurrency amount}}</h4>
+	                </div>
+	                <div class="col-xs-4">
+	                    <small class="stats-label">Puntos</small>
+	                    <h4 class={{colored points}}>{{formatNumber points}}</h4>
+	                </div>
+	            </div>
+	        </div>
+        {{else}}
+        	<div class="ibox-content">
+	            <div class="row">
+	                <div class="col-xs-12 text-center ptl pbl">
+	                	<strong>No has agregado ning&uacute;n objetivo mensual.</strong>
+						<br>
+	                	<a href="#" class="add-target-link" data-toggle="modal" data-target="#myBudgetModal">Agrega el primero</a>
+	                </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</template>

@@ -4,18 +4,6 @@
 Template.targets.helpers({
 	targets: function() {
 		return Targets.find({});
-	},
-	getMonthName: function(month) {
-		var nm = month.substr(5, 2), year = month.substr(0, 4), monthLabel;
-
-		nm = (nm[0] == 0)? nm.replace('0', '') : nm;
-		$.each(monthLabels, function(index, obj) {
-		    if (obj.key == nm) {
-		    	monthLabel = obj.name;
-		    }
-		});
-
-		return monthLabel + ' ' + year;
 	}
 });
 

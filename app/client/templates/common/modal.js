@@ -6,6 +6,10 @@ Template.modal.onRendered(function() {
 	$('#myBudgetModal').on('shown.bs.modal', function () {
         $('.chosen-select', this).chosen('destroy').chosen({width: '100%', allow_single_deselect: true});
     });
+    // Clean the modal when is closed
+    $('#myBudgetModal').on('hidden.bs.modal', function() {
+    	Session.set('modal', null);
+    });
 });
 
 // Helpers

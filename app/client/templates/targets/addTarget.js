@@ -123,7 +123,7 @@ Template.addTarget.helpers({
         return (this.target)? this.target.points : 0;
     },
     modalMode: function() {
-        return (this.target)? true : false;
+        return (this.target || Array.isArray(this))? true : false;
     },
 	selectedMonth: function() {
 		var nMonth;

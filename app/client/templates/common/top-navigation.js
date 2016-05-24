@@ -20,5 +20,15 @@ Template.topNavigation.events({
             saveBtn: {label: 'Agregar'},
             closeBtn: {label: 'Cerrar'}
         });
+    },
+    'click .add-target-link': function() {
+        Session.set('modal', {
+            title: 'Agregar Objetivo Mensual',
+            icon: 'fa-plus-square-o',
+            body: 'addTarget',
+            data: [],
+            saveBtn: {label: 'Agregar'},
+            closeBtn: {label: 'Cerrar'}
+        });
     }
 });
