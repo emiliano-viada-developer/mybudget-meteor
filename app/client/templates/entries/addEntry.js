@@ -81,6 +81,8 @@ Template.addEntry.onRendered(function() {
             	if (!error) {
             		toastr.success("Movimiento creado exitosamente.");
             		$('.clean').trigger('click');
+                    var ae = (Session.get('addedEntryCtr'))? Session.get('addedEntryCtr') : 0;
+                    Session.set('addedEntryCtr', ++ae);
             	}
             });
         },

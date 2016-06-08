@@ -10,60 +10,16 @@
                     <h5>Balance</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins text-navy">$386.200,22</h1>
+                    <h1 class="no-margins {{colored getBalance}}">{{formatCurrency getBalance}}</h1>
                     <p class="period">
-                    	<strong>Per&oacute;odo:</strong>
-                    	Desde el sábado, 1 de octubre de 2011 al martes, 15 de marzo de 2016.
+                    	<strong>Per&iacute;odo:</strong>
+                    	Desde el {{from}} al {{to}}.
                 	</p>
                 </div>
             </div>
 		</div>
 
-		<div class="col-sm-6 col-md-4">
-			<div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-primary pull-right">Actual</span>
-                    <h5>Marzo 2016</h5>
-                </div>
-                <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <small>Ingresos</small>
-                            <h1 class="no-margins text-navy">$406.420</h1>
-                            <div class="font-bold text-navy">44% <i class="fa fa-level-up"></i> <small>Comparado con el mes anterior</small></div>
-                        </div>
-                        <div class="col-md-6">
-                            <small>Gastos</small>
-                            <h1 class="no-margins text-danger">$206.120</h1>
-                            <div class="font-bold text-danger">22% <i class="fa fa-level-down"></i> <small>Comparado con el mes anterior</small></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-		</div>
-
-		<div class="col-sm-6 col-md-4">
-			<div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-success pull-right">Anterior</span>
-                    <h5>Febrero 2016</h5>
-                </div>
-                <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <small>Ingresos</small>
-                            <h1 class="no-margins text-navy">$406.420</h1>
-                            <div class="font-bold text-navy">44% <i class="fa fa-level-up"></i> <small>Comparado con el mes anterior</small></div>
-                        </div>
-                        <div class="col-md-6">
-                            <small>Gastos</small>
-                            <h1 class="no-margins text-danger">$206.120</h1>
-                            <div class="font-bold text-danger">22% <i class="fa fa-level-down"></i> <small>Comparado con el mes anterior</small></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-		</div>
+		{{> lastMonths}}
 
 	</div>
 

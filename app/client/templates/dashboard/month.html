@@ -1,0 +1,24 @@
+<template name="month">
+	<div class="col-sm-6 col-md-4">
+    	<div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="label {{currentClass}} pull-right">{{currentLabel}}</span>
+                <h5>{{label}}</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <small>Ingresos</small>
+                        <h1 class="no-margins text-navy">{{formatCurrency incomes}}</h1>
+                        <div class="font-bold {{inTextClass}}">{{formatNumber inPerc}}% <i class="fa {{inIconClass}}"></i> <small>Comparado con el mes anterior</small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <small>Gastos</small>
+                        <h1 class="no-margins text-danger">{{formatCurrency outcomes}}</h1>
+                        <div class="font-bold {{outTextClass}}">{{formatNumber outPerc}}% <i class="fa {{outIconClass}}"></i> <small>Comparado con el mes anterior</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -4,17 +4,6 @@
 Template.dashboardTargets.helpers({
 	targets: function() {
 		return Targets.find({}, {limit: 3});
-	},
-	colored: function(value) {
-		var className = '';
-
-		if (value > 0) {
-			className = 'text-navy';
-		} else if (value < 0) {
-			className = 'text-danger';
-		}
-
-		return className;
 	}
 });
 

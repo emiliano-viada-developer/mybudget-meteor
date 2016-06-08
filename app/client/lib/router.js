@@ -61,7 +61,7 @@ Router.route('/dashboard', {
     title: 'Dashboard',
     onBeforeAction: onBeforeActions.loginRequired,
     waitOn: function() {
-        return [Meteor.subscribe('categories'), Meteor.subscribe('targets')];
+        return [Meteor.subscribe('categories'), Meteor.subscribe('entries'), Meteor.subscribe('targets')];
     }
 });
 Router.route('/movimientos', {

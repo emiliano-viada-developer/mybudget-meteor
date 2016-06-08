@@ -30,3 +30,5 @@ standard-minifier-css
 standard-minifier-js
 chrismbeckett:toastr
 patrickml:swal
+simple:reactive-method
+meteorhacks:aggregate

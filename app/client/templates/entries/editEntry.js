@@ -76,6 +76,8 @@ Template.editEntry.onRendered(function() {
             	if (!error) {
             		toastr.success("Movimiento editado exitosamente.");
 					$('#myBudgetModal').modal('hide');
+                    var ae = (Session.get('addedEntry'))? Session.get('addedEntry') : 0;
+                    Session.set('addedEntry', ae++);
             	}
             });
         },

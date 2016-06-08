@@ -112,5 +112,51 @@ Meteor.methods({
 		} else {
 			throw new Meteor.Error("not-logged-in", "You're not logged-in.");
 		}
+	},
+	'getBalance': function(from, to, react) {
+		from = from || null;
+		to = to || null;
+		var haber = Meteor.call('getHaber', from, to),
+			debe = Meteor.call('getDebe', from, to);
+
+		return (haber - debe);
+	},
+	'getHaber': function(from, to) {
+		from = from || null;
+		to = to || null;
+		return Meteor.call('getSum', true, from, to);
+	},
+	'getDebe': function(from, to) {
+		from = from || null;
+		to = to || null;
+		return Meteor.call('getSum', false, from, to);
+	},
+	'getSum': function(haber, from, to) {
+		var currentUser = Meteor.userId(),
+			matchVar = {ownerId: currentUser, haber: haber, value: {$gt: 0}},
+			pipeline, result;
+
+		if (from != null && to != null) {
+			matchVar.date = {
+                $gte: new Date(moment(new Date(from)).format('YYYY-MM-DD') + ' 00:00:00.0000'),
+                $lte: new Date(moment(new Date(to)).format('YYYY-MM-DD') + ' 23:59:59.9999')
+            }
+		} else if (from != null) {
+			matchVar.date = {
+                $gte: new Date(moment(new Date(from)).format('YYYY-MM-DD') + ' 00:00:00.0000')
+            }
+		} else if (to != null) {
+			matchVar.date = {
+                $lte: new Date(moment(new Date(to)).format('YYYY-MM-DD') + ' 23:59:59.9999')
+            }
+		}
+
+		pipeline = [
+            {$match: matchVar},
+            {$group: {_id: "$owner", total : {$sum: "$value"}}}
+        ];
+		result = Entries.aggregate(pipeline);
+
+        return (result.length)? result[0].total : 0;
 	}
 });
