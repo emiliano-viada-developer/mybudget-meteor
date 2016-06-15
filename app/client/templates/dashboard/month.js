@@ -11,13 +11,34 @@ var getFromTo = function(month) {
 	return {from: from, to: to};
 };
 var getPerc = function(type, current) {
-	var percentage = 0;
+	var percentage = 100, calc = false;
 
 	if (current) {
-		percentage = (Session.get('prev' + type) > 0)?
-			Math.round(((Session.get('current' + type) / Session.get('prev' + type)) * 100)) : 100;
+		if (Session.get('current' + type) >= Session.get('prev' + type)) {
+			var div1 = Session.get('current' + type),
+				div2 = Session.get('prev' + type);
+		} else if (Session.get('prev' + type) > Session.get('current' + type)) {
+			var div1 = Session.get('prev' + type),
+				div2 = Session.get('current' + type);
+		}
+		if (div2 > 0) {
+			calc = true;
+		}
 	} else {
+		if (Session.get('prev' + type) >= Session.get('prevPrev' + type)) {
+			var div1 = Session.get('prev' + type),
+				div2 = Session.get('prevPrev' + type);
+		} else if (Session.get('prevPrev' + type) > Session.get('prev' + type)) {
+			var div1 = Session.get('prevPrev' + type),
+				div2 = Session.get('prev' + type);
+		}
+		if (div2 > 0) {
+			calc = true;
+		}
+	}
 
+	if (calc) {
+		percentage = Math.round(((div1 / div2) * 100));
 	}
 
 	return percentage;
@@ -32,7 +53,7 @@ var getTextClass = function(type, current) {
 	if (current) {
 		textClass = (operators[type](Session.get('current' + type), Session.get('prev' + type)))? 'text-navy' : 'text-danger';
 	} else {
-		
+		textClass = (operators[type](Session.get('prev' + type), Session.get('prevPrev' + type)))? 'text-navy' : 'text-danger';
 	}
 
 	return textClass;
@@ -43,7 +64,7 @@ var getIconClass = function(type, current) {
 	if (current) {
 		iconClass = (Session.get('current' + type) >= Session.get('prev' + type))? 'fa-level-up' : 'fa-level-down';
 	} else {
-		
+		iconClass = (Session.get('prev' + type) >= Session.get('prevPrev' + type))? 'fa-level-up' : 'fa-level-down';
 	}
 
 	return iconClass;
@@ -60,6 +81,15 @@ Template.month.helpers({
 			mm = (this.current)? 'current' : 'prev' ;
 
 		Session.set(mm + 'Income', ReactiveMethod.call('getHaber', from, to));
+
+		if (!this.current) {
+			var help = this.month.split('-'), mmm = parseInt(help[1]),
+				newm = (mmm == 1)? 12 : mmm-1, ppm = this.month.replace(mmm, newm),
+				fromTo2 = getFromTo(ppm), from2 = fromTo2.from, to2 = fromTo2.to;
+
+			Session.set('prevPrevIncome', ReactiveMethod.call('getHaber', from2, to2));
+		}
+
 		return Session.get(mm + 'Income');
 	},
 	'outcomes': function() {
@@ -67,6 +97,15 @@ Template.month.helpers({
 			mm = (this.current)? 'current' : 'prev' ;
 
 		Session.set(mm + 'Outcome', ReactiveMethod.call('getDebe', from, to));
+
+		if (!this.current) {
+			var help = this.month.split('-'), mmm = parseInt(help[1]),
+				newm = (mmm == 1)? 12 : mmm-1, ppm = this.month.replace(mmm, newm),
+				fromTo2 = getFromTo(ppm), from2 = fromTo2.from, to2 = fromTo2.to;
+
+			Session.set('prevPrevOutcome', ReactiveMethod.call('getDebe', from2, to2));
+		}
+
 		return Session.get(mm + 'Outcome');
 	},
 	'inPerc': function() {
