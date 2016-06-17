@@ -158,5 +158,43 @@ Meteor.methods({
 		result = Entries.aggregate(pipeline);
 
         return (result.length)? result[0].total : 0;
+	},
+	'getMonthlyIncomes': function(from, to) {
+		from = from || null;
+		to = to || null;
+		return Meteor.call('getMonthly', true, from, to);
+	},
+	'getMonthlyOutcomes': function(from, to) {
+		from = from || null;
+		to = to || null;
+		return Meteor.call('getMonthly', false, from, to);
+	},
+	'getMonthly': function(haber, from, to) {
+		var currentUser = Meteor.userId(),
+			matchVar = {ownerId: currentUser, haber: haber, value: {$gt: 0}},
+			pipeline, result;
+
+		if (from != null && to != null) {
+			matchVar.date = {
+                $gte: new Date(moment(new Date(from)).format('YYYY-MM-DD') + ' 00:00:00.0000'),
+                $lte: new Date(moment(new Date(to)).format('YYYY-MM-DD') + ' 23:59:59.9999')
+            }
+		} else if (from != null) {
+			matchVar.date = {
+                $gte: new Date(moment(new Date(from)).format('YYYY-MM-DD') + ' 00:00:00.0000')
+            }
+		} else if (to != null) {
+			matchVar.date = {
+                $lte: new Date(moment(new Date(to)).format('YYYY-MM-DD') + ' 23:59:59.9999')
+            }
+		}
+
+		pipeline = [
+            {$match: matchVar},
+            {$group: {_id: { $substr: ["$date", 0, 7] }, total : {$sum: "$value"}}}
+        ];
+		result = Entries.aggregate(pipeline);
+
+        return (result.length)? result : [];
 	}
 });
