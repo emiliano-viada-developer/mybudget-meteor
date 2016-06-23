@@ -196,5 +196,21 @@ Meteor.methods({
 		result = Entries.aggregate(pipeline);
 
         return (result.length)? result : [];
+	},
+	'getTargets': function(from, to) {
+		var criteria = {};
+
+		if (from != null && to != null) {
+			criteria.month = {
+				$gte: moment(new Date(from)).format('YYYY-MM-DD'),
+				$lte: moment(new Date(to)).format('YYYY-MM-DD')
+			};
+		} else if (from != null) {
+			criteria.month = {$gte: moment(new Date(from)).format('YYYY-MM-DD')};
+		} else if (to != null) {
+			criteria.month = {$lte: moment(new Date(to)).format('YYYY-MM-DD')};
+		}
+
+		return Targets.find(criteria).fetch();
 	}
 });
