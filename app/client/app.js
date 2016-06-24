@@ -90,6 +90,24 @@ Meteor.setInterval(function() {
     Session.set("currentDate", getCurrentDate());
 }, 60000);
 
+// Global function to get x last months
+getLastMonths = function(amount, fromCurrent) {
+    var amount = amount || 12, rest = (fromCurrent)? 1 : 2, m,
+        help = Session.get('currentDate').split('-'), cur = help[1] - rest;
+
+    months = [];
+
+    for (var i = 0; i < amount; i++) {
+        m = cur - i;
+        if (m < 0) {
+            m = m + 12;
+        }
+        months.push(m);
+    }
+
+    return months;
+};
+
 // Overall helpers
 // Function to return current year
 UI.registerHelper('currentYear', function() {
@@ -126,7 +144,7 @@ UI.registerHelper('formatCurrency', function(value) {
 });
 
 // Function to check which dropdown's option is selected
-UI.registerHelper('selected', function(a, b) {
+UI.registerHelper('selected', function(a, b) {console.log(a, b);
     var selected = (a == b)? 'selected' : '';
     return selected;
 });

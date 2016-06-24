@@ -212,5 +212,67 @@ Meteor.methods({
 		}
 
 		return Targets.find(criteria).fetch();
+	},
+	'getAverage': function(from, to, categoryId) {
+		var matchVar = {value: {$gt: 0}}, pipeline, result;
+
+		// Filter by category?
+		if (categoryId) {
+			matchVar.categoryId = categoryId;
+		}
+
+		if (from != null && to != null) {
+			matchVar.date = {
+                $gte: new Date(moment(new Date(from)).format('YYYY-MM-DD') + ' 00:00:00.0000'),
+                $lte: new Date(moment(new Date(to)).format('YYYY-MM-DD') + ' 23:59:59.9999')
+            }
+		} else if (from != null) {
+			matchVar.date = {
+                $gte: new Date(moment(new Date(from)).format('YYYY-MM-DD') + ' 00:00:00.0000')
+            }
+		} else if (to != null) {
+			matchVar.date = {
+                $lte: new Date(moment(new Date(to)).format('YYYY-MM-DD') + ' 23:59:59.9999')
+            }
+		}
+
+		pipeline = [
+            {$match: matchVar},
+            {$group: {_id: categoryId, average: {$avg: "$value"}}}
+        ];
+		result = Entries.aggregate(pipeline);
+
+        return (result.length)? result[0].average : 0;
+	},
+	'getMonthlyBalances': function(from, to, categoryId) {
+		var matchVar = {value: {$gt: 0}}, pipeline, result;
+
+		// Filter by category?
+		if (categoryId) {
+			matchVar.categoryId = categoryId;
+		}
+
+		if (from != null && to != null) {
+			matchVar.date = {
+                $gte: new Date(moment(new Date(from)).format('YYYY-MM-DD') + ' 00:00:00.0000'),
+                $lte: new Date(moment(new Date(to)).format('YYYY-MM-DD') + ' 23:59:59.9999')
+            }
+		} else if (from != null) {
+			matchVar.date = {
+                $gte: new Date(moment(new Date(from)).format('YYYY-MM-DD') + ' 00:00:00.0000')
+            }
+		} else if (to != null) {
+			matchVar.date = {
+                $lte: new Date(moment(new Date(to)).format('YYYY-MM-DD') + ' 23:59:59.9999')
+            }
+		}
+
+		pipeline = [
+            {$match: matchVar},
+            {$group: {_id: { $substr: ["$date", 0, 7] }, total : {$sum: "$value"}}}
+        ];
+		result = Entries.aggregate(pipeline);
+
+        return (result.length)? result : [];
 	}
 });

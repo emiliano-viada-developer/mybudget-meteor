@@ -3,18 +3,10 @@ var currentYear, months, incomes, outcomes;
 
 // onCreated
 Template.lastMonthsChart.onCreated(function() {
-	var m, help = Session.get('currentDate').split('-'), cur = help[1] - 2;
 
-	months = [];
+	var help = Session.get('currentDate').split('-');
+	months = getLastMonths(12, false);
 	currentYear = help[2];
-
-	for (var i = 0; i < 12; i++) {
-		m = cur - i;
-		if (m < 0) {
-			m = m + 12;
-		}
-		months.push(m)
-	}
 
 	var from = (months[months.length-1]+1) + '-01-' + (currentYear-1),
 		to = (help[1]-1) + '-' + new Date(currentYear, (help[1]-1), 0).getDate() + '-' + currentYear;
