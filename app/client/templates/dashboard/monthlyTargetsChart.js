@@ -72,6 +72,7 @@ Template.monthlyTargetsChart.onRendered(function() {
             scaleShowGridLines: true,
             scaleGridLineColor: "rgba(0,0,0,.05)",
             scaleGridLineWidth: 1,
+            scaleLabel : "<%=formatNumber(value)%>",
             bezierCurve: true,
             bezierCurveTension: 0.4,
             pointDot: true,
@@ -82,7 +83,8 @@ Template.monthlyTargetsChart.onRendered(function() {
             datasetStrokeWidth: 2,
             scaleBeginAtZero: false,
             datasetFill: true,
-            responsive: true
+            responsive: true,
+            tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= formatNumber(value) %>"
         };
 
         var ctz = document.getElementById("monthlyTargetsChart").getContext("2d"),
@@ -90,6 +92,24 @@ Template.monthlyTargetsChart.onRendered(function() {
 
         $('#show-tab-2').on('shown.bs.tab', function(e) {
             monthlyTargetsChart = new Chart(ctz).Bar(monthlyTargetsData, monthlyTargetsOptions);
+            // Check if we should change color for negative values
+            var shouldChange = false;
+            _.forEach(monthlyTargetsChart.datasets[0].bars, function(item, i) {
+                if (item.value < 0) {
+                    monthlyTargetsChart.datasets[0].bars[i].fillColor = "rgba(237,85,101,0.5)";
+                    monthlyTargetsChart.datasets[0].bars[i].strokeColor = "rgba(237,85,101,0.7)";
+                    monthlyTargetsChart.datasets[0].bars[i].pointColor = "rgba(237,85,101,1)";
+                    monthlyTargetsChart.datasets[0].bars[i].pointStrokeColor = "#fff";
+                    monthlyTargetsChart.datasets[0].bars[i].pointHighlightFill = "#fff";
+                    monthlyTargetsChart.datasets[0].bars[i].pointHighlightStroke = "rgba(237,85,101,1)";
+                    monthlyTargetsChart.datasets[0].bars[i].highlightFill = "rgba(237,85,101,0.5)";
+                    monthlyTargetsChart.datasets[0].bars[i].highlightStroke = "rgba(237,85,101,0.7)",
+                    shouldChange = true;
+                }
+            });
+            if (shouldChange) {
+                monthlyTargetsChart.update();
+            }
         }).on('hidden.bs.tab', function(e) {
         	monthlyTargetsChart.destroy();
         });

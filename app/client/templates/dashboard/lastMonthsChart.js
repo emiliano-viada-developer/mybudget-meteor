@@ -97,6 +97,7 @@ Template.lastMonthsChart.onRendered(function() {
 	        scaleShowGridLines: true,
 	        scaleGridLineColor: "rgba(0,0,0,.05)",
 	        scaleGridLineWidth: 1,
+	        scaleLabel : "<%=formatCurrency(value)%>",
 	        bezierCurve: true,
 	        bezierCurveTension: 0.4,
 	        pointDot: true,
@@ -106,7 +107,8 @@ Template.lastMonthsChart.onRendered(function() {
 	        datasetStroke: true,
 	        datasetStrokeWidth: 2,
 	        datasetFill: true,
-	        responsive: true
+	        responsive: true,
+	        multiTooltipTemplate: "<%= formatCurrency(value) %>"
 	    };
 
 	    var cty = document.getElementById("lastMonthsChart").getContext("2d"),

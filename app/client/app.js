@@ -132,7 +132,7 @@ UI.registerHelper('formatNumber', function(value) {
     return formatNumber(value);
 });
 // Format currency
-UI.registerHelper('formatCurrency', function(value) {
+formatCurrency = function(value) {
     var ret;
 
     if (value >= 0) {
@@ -142,7 +142,8 @@ UI.registerHelper('formatCurrency', function(value) {
     }
 
     return ret;
-});
+}
+UI.registerHelper('formatCurrency', formatCurrency);
 
 // Function to check which dropdown's option is selected
 UI.registerHelper('selected', function(a, b) {console.log(a, b);

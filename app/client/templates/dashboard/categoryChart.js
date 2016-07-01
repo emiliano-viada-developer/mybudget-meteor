@@ -76,8 +76,7 @@ Template.categoryChart.events({
 		if (changedCategory) {
 			Session.set('categoryChart', changedCategory);
 		} else {
-			//toastr.error("Hubo un error. Intentalo nuevamente.");
-            // Default to default category
+			// Default to default category
             Session.set('categoryChart', defaultCategory);
 		}
 
@@ -150,6 +149,7 @@ Template.categoryChart.onRendered(function() {
 	        scaleShowGridLines: true,
 	        scaleGridLineColor: "rgba(0,0,0,.05)",
 	        scaleGridLineWidth: 1,
+            scaleLabel : "<%=formatCurrency(value)%>",
 	        bezierCurve: true,
 	        bezierCurveTension: 0.4,
 	        pointDot: true,
@@ -159,11 +159,11 @@ Template.categoryChart.onRendered(function() {
 	        datasetStroke: true,
 	        datasetStrokeWidth: 2,
 	        datasetFill: true,
-	        responsive: true
+	        responsive: true,
+            tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= formatCurrency(value) %>"
 	    };
 
-
-	    var ctx = document.getElementById("lineChart").getContext("2d");
-	    categoryChart = new Chart(ctx).Line(lineData, lineOptions);
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        categoryChart = new Chart(ctx).Line(lineData, lineOptions);
     }, 300);
 });
