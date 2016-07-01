@@ -124,7 +124,8 @@ UI.registerHelper('formatDate', function(date, format) {
 });
 
 formatNumber = function(value) {
-    return new String(value).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    var tf = (value % 1 != 0)? 2 : 0;
+    return parseFloat(value).toFixed(tf).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 // Format number
 UI.registerHelper('formatNumber', function(value) {

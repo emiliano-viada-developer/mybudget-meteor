@@ -1,36 +1,43 @@
 // Template: categoryChart
-var months, byMonth, current = 0, previous = 0;
+var defaultCategory, months, byMonth, categoryChart;
+
+var getMonthlyBalances = function(category) {
+    Session.set('categoryCurrentBalance', 0);
+    Session.set('categoryPrevBalance', 0);
+
+    var help = Session.get('currentDate').split('-');
+        months = getLastMonths(7, true);
+        currentYear = help[2];
+
+    var from = (months[months.length-1]+1) + '-01-' + (currentYear-1),
+        to = help[1] + '-' + new Date(currentYear, help[1], 0).getDate() + '-' + currentYear;
+
+    // Get balances by month
+    Meteor.call('getMonthlyBalances', from, to, category._id, function(error, result) {
+        if (!error) {
+            byMonth = result;
+            var cm = (String(help[1]).length == 1)? '0' + help[1] : help[1],
+                pm = (String((help[1]-1)).length == 1)? '0' + (help[1]-1) : (help[1]-1),
+                ycm = currentYear + '-' + cm,
+                ypm = currentYear + '-' + pm;
+            _.forEach(byMonth, function(obj, z) {
+                if (obj._id == ycm) {
+                    Session.set('categoryCurrentBalance', obj.total);
+                } else if (obj._id == ypm) {
+                    Session.set('categoryPrevBalance', obj.total);
+                }
+            });
+        }
+    });
+};
 
 // onCreated
 Template.categoryChart.onCreated(function() {
 	// TODO: Make default category configurable
-	var category = Categories.findOne({});
-	Session.set('categoryChart', category);
+	defaultCategory = Categories.findOne({});
+	Session.set('categoryChart', defaultCategory);
 
-	var help = Session.get('currentDate').split('-');
-		months = getLastMonths(7, true);
-		currentYear = help[2];
-
-	var from = (months[months.length-1]+1) + '-01-' + (currentYear-1),
-		to = help[1] + '-' + new Date(currentYear, help[1], 0).getDate() + '-' + currentYear;
-
-	// Get balances by month
-	Meteor.call('getMonthlyBalances', from, to, Session.get('categoryChart')._id, function(error, result) {
-		if (!error) {
-			byMonth = result;
-			var cm = (String(help[1]).length == 1)? '0' + help[1] : help[1],
-				pm = (String((help[1]-1)).length == 1)? '0' + (help[1]-1) : (help[1]-1),
-				ycm = currentYear + '-' + cm,
-				ypm = currentYear + '-' + pm;
-			_.forEach(byMonth, function(obj, z) {
-				if (obj._id == ycm) {
-					current = obj.total;
-				} else if (obj._id == ypm) {
-					previous = obj.total;
-				}
-			});
-		}
-	});
+	getMonthlyBalances(defaultCategory);
 });
 
 // helpers
@@ -52,10 +59,10 @@ Template.categoryChart.helpers({
 		return ReactiveMethod.call('getAverage', null, null, Session.get('categoryChart')._id);
 	},
 	currentBalance: function() {
-		return current;
+		return Session.get('categoryCurrentBalance');
 	},
 	previousBalance: function() {
-		return previous;
+		return Session.get('categoryPrevBalance');
 	}
 });
 
@@ -69,10 +76,47 @@ Template.categoryChart.events({
 		if (changedCategory) {
 			Session.set('categoryChart', changedCategory);
 		} else {
-			toastr.error("Hubo un error. Intentalo nuevamente.");
+			//toastr.error("Hubo un error. Intentalo nuevamente.");
+            // Default to default category
+            Session.set('categoryChart', defaultCategory);
 		}
+
+        getMonthlyBalances(Session.get('categoryChart'));
+        setTimeout(function() {
+            var newData = getByMonthData();
+            _.forEach(newData, function(val, i) {
+                categoryChart.datasets[0].points[i].value = val;
+            });
+            categoryChart.update(300);
+        }, 300);
 	}
 });
+
+var getByMonthData = function() {
+    var data = [], year = currentYear-1;
+    _.forEach(months.slice(0).reverse(), function(key, i) {
+        var month = (key+1), date, mhas = false;
+
+        if (String(month).length == 1) {
+            month = '0' + month;
+        }
+        if (key == 0) {
+            year++;
+        }
+        date = year + '-' + month;
+        _.forEach(byMonth, function(obj, z) {
+            if (obj._id == date) {
+                data.push(obj.total);
+                mhas = true;
+            }
+        });
+        if (!mhas) {
+            data.push(0);
+        }
+    });
+
+    return data;
+};
 
 // onRendered
 Template.categoryChart.onRendered(function() {
@@ -84,27 +128,7 @@ Template.categoryChart.onRendered(function() {
 	});
 
 	setTimeout(function() {
-		var byMonthData = [], year = currentYear-1;
-		_.forEach(months.slice(0).reverse(), function(key, i) {
-			var month = (key+1), date, mhas = false;
-
-			if (String(month).length == 1) {
-				month = '0' + month;
-			}
-			if (key == 0) {
-				year++;
-			}
-			date = year + '-' + month;
-			_.forEach(byMonth, function(obj, z) {
-				if (obj._id == date) {
-					byMonthData.push(obj.total);
-					mhas = true;
-				}
-			});
-			if (!mhas) {
-				byMonthData.push(0);
-			}
-		});
+		var byMonthData = getByMonthData();
 
 		var lineData = {
 	        labels: monthLabels,
@@ -140,6 +164,6 @@ Template.categoryChart.onRendered(function() {
 
 
 	    var ctx = document.getElementById("lineChart").getContext("2d");
-	    new Chart(ctx).Line(lineData, lineOptions);
+	    categoryChart = new Chart(ctx).Line(lineData, lineOptions);
     }, 300);
 });
