@@ -10,29 +10,38 @@
 	                </div>
 	                <div class="ibox-content">
 
-	                    <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Buscar..">
+	                    <div class="row">
+		                    <div class="col-sm-8">
+		                    	<input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Buscar..">
+	                    	</div>
 
-	                    <table class="footable table table-stripped" data-page-size="15" data-filter=#filter>
+		                    <div class="col-sm-4" style="display:table;">
+		                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+	            				<input type="text" name="date" id="date-filter" class="form-control" value="">
+            				</div>
+            			</div>
+
+	                    <table class="footable table table-stripped" data-page-size="15" data-filter="#filter" data-sorting="true">
 	                        <thead>
 	                        <tr>
-	                            <th>Fecha</th>
+	                            <th data-type="date">Fecha</th>
 	                            <th>Debe</th>
 	                            <th>Haber</th>
 	                            <th>Categor&iacute;a</th>
 	                            <th>Computable</th>
-	                            <th>Valor</th>
-	                            <th>Acciones</th>
+	                            <th date-type="number">Valor</th>
+	                            <th data-sort-ignore="true">Acciones</th>
 	                        </tr>
 	                        </thead>
 	                        <tbody>
 		                        {{#each entries}}
 			                        <tr class="gradeA">
-			                            <td>{{ formatDate date 'DD/MM/YYYY' }}</td>
+			                            <td data-value="{{ formatDate date 'X' }}">{{ formatDate date 'DD/MM/YYYY' }}</td>
 			                            <td>{{#unless haber}}<i class="fa fa-check text-info"></i>{{/unless}}</td>
 			                            <td>{{#if haber}}<i class="fa fa-check text-info"></i>{{/if}}</td>
 			                            <td>{{getCategory.name}}</td>
 			                            <td>{{#if countable}}<i class="fa fa-check text-info"></i>{{/if}}</td>
-			                            <td>{{ formatCurrency value }}</td>
+			                            <td data-value="{{value}}">{{ formatCurrency value }}</td>
 			                            <td>
 			                            	<a href="#" title="Ver" class="text-primary view" data-toggle="modal" data-target="#myBudgetModal" data-entry-id="{{_id}}"><i class="fa fa-eye"></i></a> &nbsp;
 			                            	<a href="#" title="Editar" class="text-primary edit" data-toggle="modal" data-target="#myBudgetModal" data-entry-id="{{_id}}"><i class="fa fa-edit"></i></a> &nbsp;
@@ -46,7 +55,7 @@
 	                        <tfoot>
 		                        <tr>
 		                            <td colspan="7">
-		                                <ul class="pagination pull-right"></ul>
+		                                <ul class="pagination hide-if-no-paging pull-right"></ul>
 		                            </td>
 		                        </tr>
 	                        </tfoot>
