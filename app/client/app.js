@@ -146,7 +146,7 @@ formatCurrency = function(value) {
 UI.registerHelper('formatCurrency', formatCurrency);
 
 // Function to check which dropdown's option is selected
-UI.registerHelper('selected', function(a, b) {console.log(a, b);
+UI.registerHelper('selected', function(a, b) {
     var selected = (a == b)? 'selected' : '';
     return selected;
 });

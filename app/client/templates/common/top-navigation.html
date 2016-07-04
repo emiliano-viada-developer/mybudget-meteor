@@ -9,24 +9,24 @@
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    <li class="{{getActiveItem 'dashboard'}}">
                         <a aria-expanded="false" role="button" href="{{pathFor 'dashboard'}}"> Dashboard</a>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown {{getActiveItem 'categories'}}">
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Categor&iacute;as <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
                             <li><a href="{{pathFor 'categories'}}">Listar</a></li>
                             <li><a href="#" class="add-category-link" data-toggle="modal" data-target="#myBudgetModal">Agregar</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown {{getActiveItem 'entries'}}">
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Movimientos <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
                             <li><a href="{{pathFor 'entries'}}">Listar</a></li>
                             <li><a href="{{pathFor 'entries'}}#addEntry">Agregar</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown {{getActiveItem 'targets'}}">
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Objetivos mensuales<span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
                             <li><a href="{{pathFor 'targets'}}">Listar</a></li>
