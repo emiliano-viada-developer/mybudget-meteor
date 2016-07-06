@@ -5,8 +5,9 @@ var getMonthlyBalances = function(category) {
     Session.set('categoryCurrentBalance', 0);
     Session.set('categoryPrevBalance', 0);
 
-    var help = Session.get('currentDate').split('-');
-        months = getLastMonths(7, true);
+    var help = Session.get('currentDate').split('-'),
+        backs = (Session.get('innerWidth') < 480)? 3 : 7;
+        months = getLastMonths(backs, true);
         currentYear = help[2];
 
     var from = (months[months.length-1]+1) + '-01-' + (currentYear-1),

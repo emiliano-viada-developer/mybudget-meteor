@@ -4,8 +4,9 @@ var currentYear, targets, months;
 // onCreated
 Template.monthlyTargetsChart.onCreated(function() {
 
-    var help = Session.get('currentDate').split('-');
-    months = getLastMonths(12, false);
+    var help = Session.get('currentDate').split('-'),
+        backs = (Session.get('innerWidth') < 480)? 6 : 12;
+    months = getLastMonths(backs, false);
     currentYear = help[2];
 
     var from = (months[months.length-1]+1) + '-01-' + (currentYear-1),

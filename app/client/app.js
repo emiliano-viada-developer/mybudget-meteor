@@ -108,6 +108,12 @@ getLastMonths = function(amount, fromCurrent) {
     return months;
 };
 
+// Inner width
+Session.setDefault('innerWidth', window.innerWidth);
+$(window).on('resize', function(e) {
+    Session.set('innerWidth', window.innerWidth);
+});
+
 // Overall helpers
 // Function to return current year
 UI.registerHelper('currentYear', function() {
