@@ -24,14 +24,14 @@
                         <h2 class="no-margins">{{formatCurrency currentBalance}}</h2>
                         <small>Mes actual</small>
                         <div class="progress progress-mini">
-                            <div class="progress-bar" style="width: 48%;"></div>
+                            <div class="progress-bar" style="width: {{getBalancePerc}}%;"></div>
                         </div>
                     </li>
                     <li>
                         <h2 class="no-margins ">{{formatCurrency previousBalance}}</h2>
                         <small>Mes anterior</small>
                         <div class="progress progress-mini">
-                            <div class="progress-bar" style="width: 60%;"></div>
+                            <div class="progress-bar" style="width: {{getBalancePerc false}}%;"></div>
                         </div>
                     </li>
                 </ul>

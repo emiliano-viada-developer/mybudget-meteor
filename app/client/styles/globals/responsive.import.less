@@ -2,6 +2,11 @@
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: @screen-sm-min) {
+    h1 { font-size: 30px; }
+    .container {
+        width:100%;
+        padding: 0 15px;
+    }
     .loginColumns {
       padding: 100px 50px 20px;
     }
@@ -12,12 +17,31 @@
     .ibox {
         margin-bottom: 25px;
     }
-    .outcomes, .chose-category, .lineChartContainer { margin-top:0; }
+    .ibox-content { padding: 15px 20px 20px; }
+    .sweet-alert {
+      button {
+        width:auto;
+        margin-bottom:0;
+      }
+    }
+    .outcomes, .chose-category { margin-top:0; }
     .top-navigation .nav > li.active { background: #fff; }
+    .top-navigation .nav > li > a { padding: 15px 10px; }
+    .top-navigation .navbar-header {
+        float: none;
+        display: inline-block;
+    }
+    .navbar-collapse.collapse { display: inline-block !important; }
+    .tabs-container .nav > li.active { background: none; }
 }
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: @screen-md-min) {
+    .container {
+        .container {
+            padding: 0 15px;
+        }
+    }
     .wrapper.wrapper-content {
         padding: 20px;
     }
@@ -27,4 +51,9 @@
     .tabs-container {
         margin-bottom: 25px;
     }
+    .navbar-toggle { display: none; }
+    .top-navigation .navbar-header { float: left; }
+    .top-navigation .nav > li > a { padding: 15px 20px; }
+    .navbar-collapse.collapse { display: block !important; }
+    .lineChartContainer { margin-top:0; }
 }

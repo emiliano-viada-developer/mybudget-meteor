@@ -64,7 +64,13 @@ Template.categoryChart.helpers({
 	},
 	previousBalance: function() {
 		return Session.get('categoryPrevBalance');
-	}
+	},
+    getBalancePerc: function(current = true) {
+        let balance = (current)? Session.get('categoryCurrentBalance') : Session.get('categoryPrevBalance');
+        let average = ReactiveMethod.call('getAverage', null, null, Session.get('categoryChart')._id);
+
+        return (balance < average)? Math.round((balance/average)*100) : 100;
+    }
 });
 
 // Events

@@ -30,6 +30,9 @@ var getActiveItems = function() {
 
 // helpers
 Template.topNavigation.helpers({
+    isDashboard: function() {
+        return (Router.current().route.getName() == 'dashboard');
+    },
     getActiveItem: function(key) {
         getActiveItems();
         return Session.get(ACTIVE_ITEMS)[key] && 'active';
@@ -68,5 +71,15 @@ Template.topNavigation.events({
             saveBtn: {label: 'Agregar'},
             closeBtn: {label: 'Cerrar'}
         });
+    },
+    'click .navbar-nav li a': function(e) {
+        let _this = $(e.currentTarget);
+        if (!_this.hasClass('dropdown-toggle')) {
+            // Close navigation
+            _this.closest('.navbar-collapse').removeClass('in');
+        }
+    },
+    'click .scroll-to': function(e) {
+        scrollToHash(500);
     }
 });

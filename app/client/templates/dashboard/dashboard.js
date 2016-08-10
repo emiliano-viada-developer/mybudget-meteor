@@ -1,5 +1,10 @@
 // Template: dashboard
 
+// onRendered
+Template.dashboard.onRendered(function() {
+    scrollToHash(500);
+});
+
 // Helpers
 Template.dashboard.helpers({
     categories: function() {

@@ -9,7 +9,7 @@
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav">
-                    <li class="{{getActiveItem 'dashboard'}}">
+                    <li class="{{getActiveItem 'dashboard'}} hidden-xs hidden-sm">
                         <a aria-expanded="false" role="button" href="{{pathFor 'dashboard'}}"> Dashboard</a>
                     </li>
                     <li class="dropdown {{getActiveItem 'categories'}}">
@@ -23,7 +23,13 @@
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Movimientos <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
                             <li><a href="{{pathFor 'entries'}}">Listar</a></li>
-                            <li><a href="{{pathFor 'entries'}}#addEntry">Agregar</a></li>
+                            <li>
+                                {{#if isDashboard}}
+                                    <a class="scroll-to" href="#addEntry">Agregar</a>
+                                {{else}}
+                                    <a class="scroll-to" href="{{pathFor 'entries' hash='addEntry'}}">Agregar</a>
+                                {{/if}}
+                            </li>
                         </ul>
                     </li>
                     <li class="dropdown {{getActiveItem 'targets'}}">

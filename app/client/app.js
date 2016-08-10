@@ -108,6 +108,21 @@ getLastMonths = function(amount, fromCurrent) {
     return months;
 };
 
+// Global function to scroll to hash id element
+scrollToHash = function(duration) {
+    setTimeout(function() {
+        let duration = duration || 1000;
+        if (location.hash) {
+            let $target = $('[name=' + location.hash.slice(1) +']');
+            if ($target.length) {
+                var targetOffset = $target.offset().top;
+                $('html,body').animate({scrollTop: targetOffset}, duration);
+                return false;
+            }
+        }
+    }, 300);
+};
+
 // Inner width
 Session.setDefault('innerWidth', window.innerWidth);
 $(window).on('resize', function(e) {
