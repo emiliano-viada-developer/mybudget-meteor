@@ -1,5 +1,5 @@
 // Template: categoryChart
-var defaultCategory, months, byMonth, categoryChart;
+var defaultCategory, months, byMonth, fromDate, toDate, categoryChart;
 
 var getMonthlyBalances = function(category) {
     Session.set('categoryCurrentBalance', 0);
@@ -10,11 +10,15 @@ var getMonthlyBalances = function(category) {
         months = getLastMonths(backs, true);
         currentYear = help[2];
 
-    var from = (months[months.length-1]+1) + '-01-' + (currentYear-1),
-        to = help[1] + '-' + new Date(currentYear, help[1], 0).getDate() + '-' + currentYear;
+    let fromYear = (months[months.length-1] > months[0])? (currentYear-1) : currentYear,
+        fromMonthAux = (months[months.length-1]+1),
+        fromMonth = (fromMonthAux.length > 1)? fromMonthAux : '0' + fromMonthAux,
+        fromDate = fromMonth + '-01-' + fromYear,
+        toMonth = (help[1].length > 1)? help[1] : '0' + help[1],
+        toDate = toMonth + '-' + new Date(currentYear, help[1], 0).getDate() + '-' + currentYear;
 
     // Get balances by month
-    Meteor.call('getMonthlyBalances', from, to, category._id, function(error, result) {
+    Meteor.call('getMonthlyBalances', fromDate, toDate, category._id, function(error, result) {
         if (!error) {
             byMonth = result;
             var cm = (String(help[1]).length == 1)? '0' + help[1] : help[1],
@@ -52,12 +56,20 @@ Template.categoryChart.helpers({
 	lastEntry: function() {
 		var category = Session.get('categoryChart'), entry;
 
-		entry = Entries.findOne({categoryId: category._id}, {sort: {date: -1}});
+		let categories = [{categoryId: category._id}];
+        // If the category has children search on each one of them
+        let categs = Categories.find({parentId: category._id}).fetch();
+        if (categs.length) {
+            categs.forEach(function(cat) {
+                categories.push({categoryId: cat._id});
+            });
+        }
+        entry = Entries.findOne({$or: categories}, {sort: {date: -1}});
 
 		return (entry)? moment(entry.date).format('DD/MM/YYYY') : 'n/a';
 	},
 	getAverage: function() {
-		return ReactiveMethod.call('getAverage', null, null, Session.get('categoryChart')._id);
+		return ReactiveMethod.call('getAverage', fromDate, toDate, Session.get('categoryChart')._id);
 	},
 	currentBalance: function() {
 		return Session.get('categoryCurrentBalance');
@@ -99,15 +111,15 @@ Template.categoryChart.events({
 });
 
 var getByMonthData = function() {
-    var data = [], year = currentYear-1;
+    var data = [], year = currentYear;
     _.forEach(months.slice(0).reverse(), function(key, i) {
         var month = (key+1), date, mhas = false;
 
         if (String(month).length == 1) {
             month = '0' + month;
         }
-        if (key == 0) {
-            year++;
+        if (key > months[0]) {
+            year--;
         }
         date = year + '-' + month;
         _.forEach(byMonth, function(obj, z) {

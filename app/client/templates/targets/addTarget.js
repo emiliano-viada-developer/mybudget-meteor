@@ -42,7 +42,7 @@ Template.addTarget.onRendered(function() {
             year = form.find('.target-year').val();
             month = (month.length == 1)? '0' + month : month;
             target = {
-            	month: year + '-' + month + '-15',
+            	month: new Date(year + '-' + month + '-15'),
             	amount: parseFloat(form.find('.amount').val()),
             	points: parseFloat(form.find('.points').val())
             };
@@ -75,7 +75,7 @@ Template.addTarget.onRendered(function() {
 	            year = form.find('.target-year').val();
 	            month = (month.length == 1)? '0' + month : month;
                 target = {
-                    month: year + '-' + month + '-15',
+                    month: new Date(year + '-' + month + '-15'),
 	            	amount: parseFloat(form.find('.amount').val()),
 	            	points: parseFloat(form.find('.points').val())
                 };
@@ -129,7 +129,7 @@ Template.addTarget.helpers({
 		var nMonth;
 
 		if (Template.instance().data && Template.instance().data.target) {
-			nMonth = parseInt(Template.instance().data.target.month.substr(5, 2));
+			nMonth = parseInt(Template.instance().data.target.month.getMonth()+1);
 		} else {
 			nMonth = new Date().getMonth() + 1;
 		}
@@ -140,7 +140,7 @@ Template.addTarget.helpers({
 		var nYear;
 
 		if (Template.instance().data && Template.instance().data.target) {
-			nYear = parseInt(Template.instance().data.target.month.substr(0, 4));
+			nYear = parseInt(Template.instance().data.target.month.getFullYear());
 		} else {
 			nYear = new Date().getFullYear();
 		}

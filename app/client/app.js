@@ -185,10 +185,17 @@ UI.registerHelper('colored', function(value) {
     return className;
 });
 
-UI.registerHelper('getMonthName', function(month) {
-    var nm = month.substr(5, 2), year = month.substr(0, 4), monthLabel;
+UI.registerHelper('objIdToString', function(value) {
+    ret = value;
+    if (typeof value == 'object') {
+        ret = value._str;
+    }
+    return ret;
+});
 
-    nm = (nm[0] == 0)? nm.replace('0', '') : nm;
+UI.registerHelper('getMonthName', function(month) {
+    var nm = (month.getMonth()+1), year = month.getFullYear(), monthLabel;
+
     $.each(monthLabels, function(index, obj) {
         if (obj.key == nm) {
             monthLabel = obj.name;

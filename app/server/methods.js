@@ -80,7 +80,7 @@ Meteor.methods({
 		var currentUser = Meteor.userId();
 
 		if (currentUser) {
-			check(target, {month: String, amount: Number, points: Number});
+			check(target, {month: Date, amount: Number, points: Number});
 			target.ownerId = currentUser;
 			target.createdAt = new Date();
 			target.updatedAt = new Date();
@@ -95,7 +95,7 @@ Meteor.methods({
 		var currentUser = Meteor.userId();
 
 		if (currentUser) {
-			check(target, {month: String, amount: Number, points: Number});
+			check(target, {month: Date, amount: Number, points: Number});
 			target.updatedAt = new Date();
 
 			Targets.update({_id: targetId, ownerId: currentUser}, {$set: target});
@@ -218,7 +218,15 @@ Meteor.methods({
 
 		// Filter by category?
 		if (categoryId) {
-			matchVar.categoryId = categoryId;
+			let categories = [{categoryId: categoryId}];
+			// If the category has children search on each one of them
+			let categs = Categories.find({parentId: categoryId}).fetch();
+			if (categs.length) {
+				categs.forEach(function(cat) {
+					categories.push({categoryId: cat._id});
+				});
+			}
+			matchVar.$or = categories;
 		}
 
 		if (from != null && to != null) {
@@ -249,7 +257,15 @@ Meteor.methods({
 
 		// Filter by category?
 		if (categoryId) {
-			matchVar.categoryId = categoryId;
+			let categories = [{categoryId: categoryId}];
+			// If the category has children search on each one of them
+			let categs = Categories.find({parentId: categoryId}).fetch();
+			if (categs.length) {
+				categs.forEach(function(cat) {
+					categories.push({categoryId: cat._id});
+				});
+			}
+			matchVar.$or = categories;
 		}
 
 		if (from != null && to != null) {

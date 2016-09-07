@@ -3,8 +3,14 @@
 // helpers
 Template.targets.helpers({
 	targets: function() {
-		return Targets.find({});
+		return Targets.find({}, {sort: {month: -1}});
 	}
+});
+
+// onRendered
+Template.targets.onRendered(function() {
+    // Footable
+    $('.footable').footable();
 });
 
 // Events

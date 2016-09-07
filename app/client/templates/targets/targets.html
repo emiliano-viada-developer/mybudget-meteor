@@ -24,9 +24,9 @@
 	                        <tbody>
 		                        {{#each targets}}
 			                        <tr class="gradeA">
-			                            <td>{{getMonthName(month)}}</td>
-			                            <td>{{amount}}</td>
-			                            <td>{{points}}</td>
+			                            <td>{{getMonthName month}}</td>
+			                            <td>{{formatCurrency amount}}</td>
+			                            <td>{{formatNumber points}}</td>
 			                            <td>
 			                            	<a href="#" title="Editar" class="text-primary edit" data-toggle="modal" data-target="#myBudgetModal" data-target-id="{{_id}}"><i class="fa fa-edit"></i></a> &nbsp;
 			                            	<a href="#" title="Eliminar" class="text-primary delete" data-target-id="{{_id}}"><i class="fa fa-times"></i></a>
