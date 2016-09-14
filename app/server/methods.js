@@ -202,13 +202,13 @@ Meteor.methods({
 
 		if (from != null && to != null) {
 			criteria.month = {
-				$gte: moment(new Date(from)).format('YYYY-MM-DD'),
-				$lte: moment(new Date(to)).format('YYYY-MM-DD')
+				$gte: new Date(moment(new Date(from)).format('YYYY-MM-DD') + ' 00:00:00.0000'),
+				$lte: new Date(moment(new Date(to)).format('YYYY-MM-DD') + ' 23:59:59.9999')
 			};
 		} else if (from != null) {
-			criteria.month = {$gte: moment(new Date(from)).format('YYYY-MM-DD')};
+			criteria.month = {$gte: new Date(moment(new Date(from)).format('YYYY-MM-DD') + ' 00:00:00.0000')};
 		} else if (to != null) {
-			criteria.month = {$lte: moment(new Date(to)).format('YYYY-MM-DD')};
+			criteria.month = {$lte: new Date(moment(new Date(to)).format('YYYY-MM-DD') + ' 23:59:59.9999')};
 		}
 
 		return Targets.find(criteria).fetch();

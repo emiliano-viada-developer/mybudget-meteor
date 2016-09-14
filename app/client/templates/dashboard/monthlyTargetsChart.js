@@ -9,11 +9,16 @@ Template.monthlyTargetsChart.onCreated(function() {
     months = getLastMonths(backs, false);
     currentYear = help[2];
 
-    var from = (months[months.length-1]+1) + '-01-' + (currentYear-1),
-        to = (help[1]-1) + '-' + new Date(currentYear, (help[1]-1), 0).getDate() + '-' + currentYear;
+    let fromYear = (months[months.length-1] > months[0])? (currentYear-1) : currentYear,
+        fromMonthAux = (months[months.length-1]+1),
+        fromMonth = (fromMonthAux.length > 1)? fromMonthAux : '0' + fromMonthAux,
+        fromDate = fromMonth + '-01-' + fromYear,
+        toMonthAux = help[1]-1,
+        toMonth = (toMonthAux.length > 1)? toMonthAux : '0' + toMonthAux,
+        toDate = toMonth + '-' + new Date(currentYear, toMonthAux, 0).getDate() + '-' + currentYear;
 
     // Get monthly targets
-    Meteor.call('getTargets', from, to, function(error, result) {
+    Meteor.call('getTargets', fromDate, toDate, function(error, result) {
         if (!error) {
             targets = result;
         }
@@ -43,7 +48,7 @@ Template.monthlyTargetsChart.onRendered(function() {
             }
             date = year + '-' + month;
             _.forEach(targets, function(obj, z) {
-                if (obj.month.substr(0, 7) == date) {
+                if (obj.month.toISOString().substr(0, 7) == date) {
                     targetsData.push(obj.points);
                     thas = true;
                 }
