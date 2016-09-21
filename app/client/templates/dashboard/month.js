@@ -38,7 +38,7 @@ var getPerc = function(type, current) {
 	}
 
 	if (calc) {
-		percentage = Math.round(((div1 / div2) * 100));
+		percentage = Math.round((((div1 / div2) - 1) * 100));
 	}
 
 	return percentage;

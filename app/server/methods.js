@@ -213,7 +213,8 @@ Meteor.methods({
 
 		return Targets.find(criteria).fetch();
 	},
-	'getAverage': function(from, to, categoryId) {
+	// This method is not working as expected
+	/*'getAverage': function(from, to, categoryId) {
 		var matchVar = {value: {$gt: 0}}, pipeline, result;
 
 		// Filter by category?
@@ -251,7 +252,7 @@ Meteor.methods({
 		result = Entries.aggregate(pipeline);
 
         return (result.length)? result[0].average : 0;
-	},
+	},*/
 	'getMonthlyBalances': function(from, to, categoryId) {
 		var matchVar = {value: {$gt: 0}}, pipeline, result;
 

@@ -69,7 +69,7 @@ Template.categoryChart.helpers({
 		return (entry)? moment(entry.date).format('DD/MM/YYYY') : 'n/a';
 	},
 	getAverage: function() {
-		return ReactiveMethod.call('getAverage', fromDate, toDate, Session.get('categoryChart')._id);
+		return Session.get('categoryChartAvg');
 	},
 	currentBalance: function() {
 		return Session.get('categoryCurrentBalance');
@@ -79,7 +79,7 @@ Template.categoryChart.helpers({
 	},
     getBalancePerc: function(current = true) {
         let balance = (current)? Session.get('categoryCurrentBalance') : Session.get('categoryPrevBalance');
-        let average = ReactiveMethod.call('getAverage', null, null, Session.get('categoryChart')._id);
+        let average = Session.get('categoryChartAvg');
 
         return (balance < average)? Math.round((balance/average)*100) : 100;
     }
@@ -111,7 +111,8 @@ Template.categoryChart.events({
 });
 
 var getByMonthData = function() {
-    var data = [], year = currentYear;
+    var data = [], year = currentYear,
+        avg, aa = 0, bb = 0;
     _.forEach(months.slice(0).reverse(), function(key, i) {
         var month = (key+1), date, mhas = false;
 
@@ -126,12 +127,18 @@ var getByMonthData = function() {
             if (obj._id == date) {
                 data.push(obj.total);
                 mhas = true;
+                aa += obj.total
+                bb++;
             }
         });
         if (!mhas) {
             data.push(0);
         }
     });
+
+    // Calculate average
+    avg = (aa > 0)? (aa / bb) : 0;
+    Session.set('categoryChartAvg', avg);
 
     return data;
 };
