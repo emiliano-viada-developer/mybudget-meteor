@@ -3,7 +3,7 @@
 // Helpers
 Template.entries.helpers({
 	entries: function () {
-		return Entries.find({});
+		return Entries.find({}, {sort: {date: -1}, limit: 1000});
 	},
 	categories: function() {
 		return Categories.find({});
@@ -13,7 +13,7 @@ Template.entries.helpers({
 // onRendered
 Template.entries.onRendered(function() {
 	// Footable
-	$('.footable').footable();
+	$('.footable').footable({limitNavigation: 5});
 });
 
 // Events
