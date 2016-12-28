@@ -198,7 +198,8 @@ Meteor.methods({
         return (result.length)? result : [];
 	},
 	'getTargets': function(from, to) {
-		var criteria = {};
+		let currentUser = Meteor.userId(),
+			criteria = {ownerId: currentUser};
 
 		if (from != null && to != null) {
 			criteria.month = {
@@ -254,7 +255,9 @@ Meteor.methods({
         return (result.length)? result[0].average : 0;
 	},*/
 	'getMonthlyBalances': function(from, to, categoryId) {
-		var matchVar = {value: {$gt: 0}}, pipeline, result;
+		let currentUser = Meteor.userId(),
+			matchVar = {ownerId: currentUser, value: {$gt: 0}},
+			pipeline, result;
 
 		// Filter by category?
 		if (categoryId) {

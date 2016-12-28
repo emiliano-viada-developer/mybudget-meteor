@@ -1,57 +1,69 @@
 <template name="categoryChart">
-	<div>
-        <div class="row">
-            <h3 class="font-bold no-margins col-xs-12 col-sm-6">
-                {{category.name}}
-            </h3>
-            <div class="col-xs-12 col-sm-6 pull-right chose-category">
-                <select name="category" size="1" data-placeholder="Selecciona otra categor&iacute;a..." class="chosen-select form-control category-chart-select">
-                    <option value=""></option>
-                    {{#each categories}}
-                        <option value="{{_id}}">{{name}}</option>
-                    {{/each}}
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <div class="m-t-sm">
-
-        <div class="row">
-            <div class="col-md-4">
-                <ul class="stat-list m-t-lg">
-                    <li>
-                        <h2 class="no-margins">{{formatCurrency currentBalance}}</h2>
-                        <small>Mes actual</small>
-                        <div class="progress progress-mini">
-                            <div class="progress-bar" style="width: {{getBalancePerc}}%;"></div>
-                        </div>
-                    </li>
-                    <li>
-                        <h2 class="no-margins ">{{formatCurrency previousBalance}}</h2>
-                        <small>Mes anterior</small>
-                        <div class="progress progress-mini">
-                            <div class="progress-bar" style="width: {{getBalancePerc false}}%;"></div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col-md-8 lineChartContainer">
-                <div>
-                    <canvas id="lineChart" height="195" width="463" style="width: 463px; height: 195px;"></canvas>
+	{{#if category}}
+        <div>
+            <div class="row">
+                <h3 class="font-bold no-margins col-xs-12 col-sm-6">
+                    {{category.name}}
+                </h3>
+                <div class="col-xs-12 col-sm-6 pull-right chose-category">
+                    <select name="category" size="1" data-placeholder="Selecciona otra categor&iacute;a..." class="chosen-select form-control category-chart-select">
+                        <option value=""></option>
+                        {{#each categories}}
+                            <option value="{{_id}}">{{name}}</option>
+                        {{/each}}
+                    </select>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="m-t-md row">
-        <small class="col-xs-6">
-            <strong>Promedio:</strong> {{formatCurrency getAverage}}
-        </small>
-        <small class="col-xs-6 text-right">
-            <i class="fa fa-clock-o"> </i>
-            Ultimo movimiento {{lastEntry}}
-        </small>
-    </div>
+        <div class="m-t-sm">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <ul class="stat-list m-t-lg">
+                        <li>
+                            <h2 class="no-margins">{{formatCurrency currentBalance}}</h2>
+                            <small>Mes actual</small>
+                            <div class="progress progress-mini">
+                                <div class="progress-bar" style="width: {{getBalancePerc}}%;"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <h2 class="no-margins ">{{formatCurrency previousBalance}}</h2>
+                            <small>Mes anterior</small>
+                            <div class="progress progress-mini">
+                                <div class="progress-bar" style="width: {{getBalancePerc false}}%;"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-8 lineChartContainer">
+                    <div>
+                        <canvas id="lineChart" height="195" width="463" style="width: 463px; height: 195px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-t-md row">
+            <small class="col-xs-6">
+                <strong>Promedio:</strong> {{formatCurrency getAverage}}
+            </small>
+            <small class="col-xs-6 text-right">
+                <i class="fa fa-clock-o"> </i>
+                Ultimo movimiento {{lastEntry}}
+            </small>
+        </div>
+    {{else}}
+        <div>
+            <div class="row">
+                <div class="col-xs-12 text-center ptl pbl">
+                    <strong>No has agregado ninguna categor&iacute;a.</strong>
+                    <br>
+                    <a href="#" class="add-category-link" data-toggle="modal" data-target="#myBudgetModal">Agrega la primera</a>
+                </div>
+            </div>
+        </div>
+    {{/if}}
 </template>

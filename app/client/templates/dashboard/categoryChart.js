@@ -17,8 +17,9 @@ var getMonthlyBalances = function(category) {
         toMonth = (help[1].length > 1)? help[1] : '0' + help[1],
         toDate = toMonth + '-' + new Date(currentYear, help[1], 0).getDate() + '-' + currentYear;
 
+    categoryId = (category)? category._id : null;
     // Get balances by month
-    Meteor.call('getMonthlyBalances', fromDate, toDate, category._id, function(error, result) {
+    Meteor.call('getMonthlyBalances', fromDate, toDate, categoryId, function(error, result) {
         if (!error) {
             byMonth = result;
             var cm = (String(help[1]).length == 1)? '0' + help[1] : help[1],
@@ -56,15 +57,17 @@ Template.categoryChart.helpers({
 	lastEntry: function() {
 		var category = Session.get('categoryChart'), entry;
 
-		let categories = [{categoryId: category._id}];
-        // If the category has children search on each one of them
-        let categs = Categories.find({parentId: category._id}).fetch();
-        if (categs.length) {
-            categs.forEach(function(cat) {
-                categories.push({categoryId: cat._id});
-            });
+		if (category) {
+            let categories = [{categoryId: category._id}];
+            // If the category has children search on each one of them
+            let categs = Categories.find({parentId: category._id}).fetch();
+            if (categs.length) {
+                categs.forEach(function(cat) {
+                    categories.push({categoryId: cat._id});
+                });
+            }
+            entry = Entries.findOne({$or: categories}, {sort: {date: -1}});
         }
-        entry = Entries.findOne({$or: categories}, {sort: {date: -1}});
 
 		return (entry)? moment(entry.date).format('DD/MM/YYYY') : 'n/a';
 	},
@@ -107,7 +110,18 @@ Template.categoryChart.events({
             });
             categoryChart.update(300);
         }, 300);
-	}
+	},
+    'click .add-category-link': function(e) {
+        categories = Categories.find({}).fetch();
+        Session.set('modal', {
+            title: 'Agregar categoria',
+            icon: 'fa-plus-square-o',
+            body: 'addCategory',
+            data: categories,
+            saveBtn: {label: 'Agregar'},
+            closeBtn: {label: 'Cerrar'}
+        });
+    },
 });
 
 var getByMonthData = function() {
@@ -189,7 +203,10 @@ Template.categoryChart.onRendered(function() {
             tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= formatCurrency(value) %>"
 	    };
 
-        var ctx = document.getElementById("lineChart").getContext("2d");
-        categoryChart = new Chart(ctx).Line(lineData, lineOptions);
+        let element = document.getElementById("lineChart");
+        if (element) {
+            var ctx = element.getContext("2d");
+            categoryChart = new Chart(ctx).Line(lineData, lineOptions);
+        }
     }, 300);
 });

@@ -65,9 +65,21 @@
                 <div class="ibox-title" name="addEntry">
                     <h5>Agregar movimiento</h5>
                 </div>
-                <div class="ibox-content">
-                    {{>addEntry categories}}
-                </div>
+                {{#if categoriesAmount }}
+                    <div class="ibox-content">
+                        {{>addEntry categories}}
+                    </div>
+                {{else}}
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-xs-12 text-center ptl pbl">
+                                <strong>No has agregado ninguna categor&iacute;a.</strong>
+                                <br>
+                                <a href="#" class="add-category-link" data-toggle="modal" data-target="#myBudgetModal">Agrega la primera</a>
+                            </div>
+                        </div>
+                    </div>
+                {{/if}}
             </div>
         </div>
     </div>

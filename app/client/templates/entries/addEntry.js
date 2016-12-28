@@ -104,24 +104,25 @@ Template.addEntry.onRendered(function() {
 });
 
 // helpers
+var getTodayString = function() {
+    var date = new Date(),
+        day = date.getDate(),
+        month = date.getMonth()+1;
+
+    if (day.toString().length < 2) {
+        day = '0' + day;
+    }
+    if (month.toString().length < 2) {
+        month = '0' + month;
+    }
+
+    return day + '/' + month + '/' + date.getFullYear();
+};
 Template.addEntry.helpers({
 	errorClass: function(key) {
         return Session.get(ERRORS_KEY)[key] && 'error';
     },
-	today: function() {
-		var date = new Date(),
-			day = date.getDate(),
-			month = date.getMonth()+1;
-
-		if (day.toString().length < 2) {
-			day = '0' + day;
-		}
-		if (month.toString().length < 2) {
-			month = '0' + month;
-		}
-
-		return day + '/' + month + '/' + date.getFullYear();
-	},
+	today: getTodayString,
 	categories: function() {
 		return this;
 	}
@@ -143,6 +144,7 @@ Template.addEntry.events({
 		$('label.error').hide();
 		$('.haber.i-checks').iCheck('uncheck');
 		$('.countable.i-checks').iCheck('check');
-		$('#date_1 .input-group.date').datepicker('setDate', new Date());
+		today = getTodayString();
+        $('#date_1 .input-group.date').datepicker('setDate', today);
     }
 });
